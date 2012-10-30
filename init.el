@@ -124,5 +124,31 @@
 (add-to-list 'ac-modes 'erlang-mode) 
 
 ;; python things
+(setq py-load-pymacs-p nil)
+(setq python-python-command "/usr/local/bin/python")
+
 (setq-default indent-tabs-mode nil)    ; use only spaces and no tabs
 (setq default-tab-width 4)
+
+
+(add-to-list 'load-path "/Users/ulises/Development/github/python.el/")
+(require 'python)
+
+;; Set the execution path correctly when we launch from quicksilver,
+;; etc.
+(setq exec-path (split-string (getenv "PATH") ":"))
+
+(add-to-list 'load-path "/Users/ulises/.emacs.d/plugin/pymacs-0.25/")
+(require 'pymacs)
+(pymacs-load "ropemacs" "rope-")
+
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-exec "pymacs" nil t)
+(autoload 'pymacs-load "pymacs" nil t)
+(autoload 'pymacs-autoload "pymacs")
+
+
+;;; start the emacs server
+(server-start)
