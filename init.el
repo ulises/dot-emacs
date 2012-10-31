@@ -57,6 +57,7 @@
 
 (set-default-font "-apple-Inconsolata-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
 (color-theme-solarized-dark)
+(color-theme-monokai)
 
 ;; add ensime to the mix
 ;; load the ensime lisp code...
@@ -77,6 +78,8 @@
 
 (my-add-path "/usr/local/Cellar/erlang/R15B02/bin/")
 (my-add-path "/usr/local/bin/")
+(my-add-path "/Users/ulises/bin/")
+(my-add-path "/usr/local/share/python/")
 
 (defun my-erlang-mode-hook ()
   ;; when starting an Erlang shell in Emacs, default in the node name
@@ -127,10 +130,6 @@
 (setq py-load-pymacs-p nil)
 (setq python-python-command "/usr/local/bin/python")
 
-(setq-default indent-tabs-mode nil)    ; use only spaces and no tabs
-(setq default-tab-width 4)
-
-
 (add-to-list 'load-path "/Users/ulises/Development/github/python.el/")
 (require 'python)
 
@@ -149,6 +148,49 @@
 (autoload 'pymacs-load "pymacs" nil t)
 (autoload 'pymacs-autoload "pymacs")
 
+;; set the indentation to spaces *AFTER* loading python things :/
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 
-;;; start the emacs server
-(server-start)
+;; Python Hook
+(add-hook 'python-mode-hook
+          (function (lambda ()
+                      (setq indent-tabs-mode nil
+                            tab-width 4))))
+
+;; manually check with pyflakes and pep8
+(setq-default py-pychecker-command "check-py.sh")
+(setq-default python-check-command "check-py.sh")
+(setq-default py-pychecker-command-args "")
+
+;; automatically check with flymake
+(add-hook 'find-file-hook 'flymake-find-file-hook)
+(when (load "flymake" t)
+  (defun flymake-pyflakes-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+               'flymake-create-temp-inplace))
+       (local-file (file-relative-name
+            temp-file
+            (file-name-directory buffer-file-name))))
+      (list "/Users/ulises/bin/check-py.sh"  (list local-file))))
+   (add-to-list 'flymake-allowed-file-name-masks
+             '("\\.py\\'" flymake-pyflakes-init)))
+(load-library "flymake-cursor")
+(global-set-key [f10] 'flymake-goto-prev-error)
+(global-set-key [f11] 'flymake-goto-next-error)
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(flymake-errline ((nil (:underline t :slant italic))))
+ '(flymake-warnline ((nil (:underline t :slant italic)))))
+
+;; (setq flymake-no-changes-timeout 2)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
