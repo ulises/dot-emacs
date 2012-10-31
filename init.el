@@ -80,6 +80,7 @@
 (my-add-path "/usr/local/bin/")
 (my-add-path "/Users/ulises/bin/")
 (my-add-path "/usr/local/share/python/")
+(my-add-path "/usr/local/share/npm/bin/")
 
 (defun my-erlang-mode-hook ()
   ;; when starting an Erlang shell in Emacs, default in the node name
@@ -109,6 +110,13 @@
 (add-to-list 'load-path "/User/ulises/Development/github/distel/elisp/")
 (require 'distel)
 (distel-setup)
+
+(add-hook 'erlang-mode-hook
+      (lambda()
+        (add-hook 'local-write-file-hooks
+              '(lambda()
+                 (save-excursion
+                   (delete-trailing-whitespace))))))
 
 ;; custom modes for some file extensions
 
@@ -195,4 +203,6 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; generic stuff global to pretty much everything
 (menu-bar-mode)
+(setq-default show-trailing-whitespace t)
