@@ -166,6 +166,14 @@
                       (setq indent-tabs-mode nil
                             tab-width 4))))
 
+(add-hook 'python-mode-hook
+      (lambda()
+        (add-hook 'local-write-file-hooks
+              '(lambda()
+                 (save-excursion
+                   (delete-trailing-whitespace))))))
+
+
 ;; manually check with pyflakes and pep8
 (setq-default py-pychecker-command "check-py.sh")
 (setq-default python-check-command "check-py.sh")
