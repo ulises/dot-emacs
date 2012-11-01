@@ -171,7 +171,27 @@
                       (setq indent-tabs-mode nil
                             tab-width 4))))
 
+(add-hook 'erlang-mode-hook
+          (function (lambda ()
+                      (setq indent-tabs-mode nil
+                            tab-width 4))))
+
+
 (add-hook 'python-mode-hook
+      (lambda()
+        (add-hook 'local-write-file-hooks
+              '(lambda()
+                 (save-excursion
+                   (delete-trailing-whitespace))))))
+
+(add-hook 'javascript-mode-hook
+      (lambda()
+        (add-hook 'local-write-file-hooks
+              '(lambda()
+                 (save-excursion
+                   (delete-trailing-whitespace))))))
+
+(add-hook 'erlang-mode-hook
       (lambda()
         (add-hook 'local-write-file-hooks
               '(lambda()
