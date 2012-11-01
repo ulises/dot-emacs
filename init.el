@@ -160,8 +160,13 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-;; Python Hook
+;; Python space indenting
 (add-hook 'python-mode-hook
+          (function (lambda ()
+                      (setq indent-tabs-mode nil
+                            tab-width 4))))
+
+(add-hook 'javascript-mode-hook
           (function (lambda ()
                       (setq indent-tabs-mode nil
                             tab-width 4))))
