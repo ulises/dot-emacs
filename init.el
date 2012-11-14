@@ -132,7 +132,7 @@
 (require 'auto-complete-config)
 (ac-config-default)
 
-(add-to-list 'ac-modes 'erlang-mode) 
+(add-to-list 'ac-modes 'erlang-mode)
 
 ;; python things
 (setq py-load-pymacs-p nil)
@@ -205,6 +205,7 @@
 (setq-default py-pychecker-command-args "")
 
 ;; automatically check with flymake
+
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 (when (load "flymake" t)
   (defun flymake-pyflakes-init ()
@@ -229,6 +230,30 @@
 
 (add-to-list 'flymake-allowed-file-name-masks '("\\.erl\\'" flymake-erlang-init))
 
+(add-hook 'scala-mode-hook
+          (lambda ()
+            (flymake-mode-on)
+            (scala-electric-mode)))
+(add-hook 'scala-mode-hook
+          (lambda()
+            (add-hook 'local-write-file-hooks
+                      '(lambda()
+                         (save-excursion
+                           (delete-trailing-whitespace))))))
+
+(defun flymake-scala-init ()
+  (let* ((text-of-first-line (buffer-substring-no-properties (point-min) (min 20 (point-max)))))
+    (progn
+      (remove-hook 'after-save-hook 'flymake-after-save-hook t)
+      (save-buffer)
+      (add-hook 'after-save-hook 'flymake-after-save-hook nil t)
+      (if (string-match "^//script" text-of-first-line)
+          (list "fsc" (list "-Xscript" "MainScript" "-d" "/tmp/" buffer-file-name))
+        (list "fsc" (list "-d" "/tmp/" buffer-file-name))))))
+
+(push '(".+\\.scala$" flymake-scala-init) flymake-allowed-file-name-masks)
+(push '("^\\(.*\\):\\([0-9]+\\): error: \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns)
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -249,3 +274,6 @@
 ;; generic stuff global to pretty much everything
 (menu-bar-mode)
 (setq-default show-trailing-whitespace t)
+
+;; start the emacs server
+(server-start)
