@@ -40,8 +40,12 @@
                       scala-mode
                       color-theme
                       color-theme-solarized
+                      color-theme-monokai
                       erlang
-                      markdown-mode)
+                      markdown-mode
+                      auto-complete
+                      flymake
+                      flymake-cursor)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -55,75 +59,76 @@
 (add-dotfile-path "plugin/erlang/")
 (add-to-list 'load-path "/Users/ulises/Development/github/distel/elisp")
 
-(set-default-font "-apple-Inconsolata-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
+;; (set-default-font "-apple-Inconsolata-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
+(set-default-font "-apple-Inconsolata-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1")
 (color-theme-solarized-dark)
 (color-theme-monokai)
 
 ;; add ensime to the mix
 ;; load the ensime lisp code...
-(add-to-list 'load-path "/Users/ulises/.emacs.d/plugin/ensime-2.9.2/elisp/")
-(require 'ensime)
+;; (add-to-list 'load-path "/Users/ulises/.emacs.d/plugin/ensime-2.9.2/elisp/")
+;; (require 'ensime)
 
 ;; This step causes the ensime-mode to be started whenever
 ;; scala-mode is started for a buffer. You may have to customize this step
 ;; if you're not using the standard scala mode.
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
 ;; Some Erlang customizations
-(add-to-list 'exec-path "/usr/local/lib/erlang/bin/")
+;; (add-to-list 'exec-path "/usr/local/lib/erlang/bin/")
 
-(setq erlang-root-dir "/usr/local/Cellar/erlang/R15B02/")
-(setq exec-path (cons "/usr/local/Cellar/erlang/R15B02/bin/" exec-path))
-(setq erlang-man-root-dir "/usr/local/Cellar/erlang/R15B02/share/man/")
+;; (setq erlang-root-dir "/usr/local/Cellar/erlang/R15B02/")
+;; (setq exec-path (cons "/usr/local/Cellar/erlang/R15B02/bin/" exec-path))
+;; (setq erlang-man-root-dir "/usr/local/Cellar/erlang/R15B02/share/man/")
 
-(my-add-path "/usr/local/Cellar/erlang/R15B02/bin/")
-(my-add-path "/usr/local/bin/")
-(my-add-path "/Users/ulises/bin/")
-(my-add-path "/usr/local/share/python/")
-(my-add-path "/usr/local/share/npm/bin/")
+;; (my-add-path "/usr/local/Cellar/erlang/R15B02/bin/")
+;; (my-add-path "/usr/local/bin/")
+;; (my-add-path "/Users/ulises/bin/")
+;; (my-add-path "/usr/local/share/python/")
+;; (my-add-path "/usr/local/share/npm/bin/")
 
-(defun my-erlang-mode-hook ()
-  ;; when starting an Erlang shell in Emacs, default in the node name
-  (setq inferior-erlang-machine-options '("-sname" "emacs"))
-  ;; add Erlang functions to an imenu menu
-  (imenu-add-to-menubar "imenu")
-  ;; customize keys
-  (local-set-key [return] 'newline-and-indent))
+;; (defun my-erlang-mode-hook ()
+;;   ;; when starting an Erlang shell in Emacs, default in the node name
+;;   (setq inferior-erlang-machine-options '("-sname" "emacs"))
+;;   ;; add Erlang functions to an imenu menu
+;;   (imenu-add-to-menubar "imenu")
+;;   ;; customize keys
+;;   (local-set-key [return] 'newline-and-indent))
 
-;; A number of the erlang-extended-mode key bindings are useful in the shell too
-(defconst distel-shell-keys
-  '(("\C-\M-i"   erl-complete)
-    ("\M-?"      erl-complete)
-    ("\M-."      erl-find-source-under-point)
-    ("\M-,"      erl-find-source-unwind)
-    ("\M-*"      erl-find-source-unwind))
-  "Additional keys to bind when in Erlang shell.")
+;; ;; A number of the erlang-extended-mode key bindings are useful in the shell too
+;; (defconst distel-shell-keys
+;;   '(("\C-\M-i"   erl-complete)
+;;     ("\M-?"      erl-complete)
+;;     ("\M-."      erl-find-source-under-point)
+;;     ("\M-,"      erl-find-source-unwind)
+;;     ("\M-*"      erl-find-source-unwind))
+;;   "Additional keys to bind when in Erlang shell.")
 
-(add-hook 'erlang-shell-mode-hook
-          (lambda ()
-            ;; add some Distel bindings to the Erlang shell
-            (dolist (spec distel-shell-keys)
-              (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
-(add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
+;; (add-hook 'erlang-shell-mode-hook
+;;           (lambda ()
+;;             ;; add some Distel bindings to the Erlang shell
+;;             (dolist (spec distel-shell-keys)
+;;               (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
+;; (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
 
-;; and distel for moar erlang goodness
-(add-to-list 'load-path "/User/ulises/Development/github/distel/elisp/")
-(require 'distel)
-(distel-setup)
+;; ;; and distel for moar erlang goodness
+;; (add-to-list 'load-path "/User/ulises/Development/github/distel/elisp/")
+;; (require 'distel)
+;; (distel-setup)
 
-(add-hook 'erlang-mode-hook
-      (lambda()
-        (add-hook 'local-write-file-hooks
-              '(lambda()
-                 (save-excursion
-                   (delete-trailing-whitespace))))))
+;; (add-hook 'erlang-mode-hook
+;;       (lambda()
+;;         (add-hook 'local-write-file-hooks
+;;               '(lambda()
+;;                  (save-excursion
+;;                    (delete-trailing-whitespace))))))
 
-;; custom modes for some file extensions
+;; ;; custom modes for some file extensions
 
-(add-to-list 'auto-mode-alist '("\\.erl$" . erlang-mode))
-(add-to-list 'auto-mode-alist '("\\.hrl?$" . erlang-mode))
+;; (add-to-list 'auto-mode-alist '("\\.erl$" . erlang-mode))
+;; (add-to-list 'auto-mode-alist '("\\.hrl?$" . erlang-mode))
 
-(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+;; (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 
 ;; ac-complete customisations
 (setq ac-auto-start 4)
@@ -135,32 +140,32 @@
 (add-to-list 'ac-modes 'erlang-mode)
 
 ;; python things
-(setq py-load-pymacs-p nil)
-(setq python-python-command "/usr/local/bin/python")
+;; (setq py-load-pymacs-p nil)
+;; (setq python-python-command "/usr/local/bin/python")
 
-(add-to-list 'load-path "/Users/ulises/Development/github/python.el/")
+;; (add-to-list 'load-path "/Users/ulises/Development/github/python.el/")
 (require 'python)
 
 ;; Set the execution path correctly when we launch from quicksilver,
 ;; etc.
-(setq exec-path (split-string (getenv "PATH") ":"))
+;; (setq exec-path (split-string (getenv "PATH") ":"))
 
-(add-to-list 'load-path "/Users/ulises/.emacs.d/plugin/pymacs-0.25/")
-(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
+;; (add-to-list 'load-path "/Users/ulises/.emacs.d/plugin/pymacs-0.25/")
+;; (require 'pymacs)
+;; (pymacs-load "ropemacs" "rope-")
 
-(autoload 'pymacs-apply "pymacs")
-(autoload 'pymacs-call "pymacs")
-(autoload 'pymacs-eval "pymacs" nil t)
-(autoload 'pymacs-exec "pymacs" nil t)
-(autoload 'pymacs-load "pymacs" nil t)
-(autoload 'pymacs-autoload "pymacs")
+;; (autoload 'pymacs-apply "pymacs")
+;; (autoload 'pymacs-call "pymacs")
+;; (autoload 'pymacs-eval "pymacs" nil t)
+;; (autoload 'pymacs-exec "pymacs" nil t)
+;; (autoload 'pymacs-load "pymacs" nil t)
+;; (autoload 'pymacs-autoload "pymacs")
 
 ;; set the indentation to spaces *AFTER* loading python things :/
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-;; Python space indenting
+;; space indentation and level in various languages
 (add-hook 'python-mode-hook
           (function (lambda ()
                       (setq indent-tabs-mode nil
@@ -176,7 +181,7 @@
                       (setq indent-tabs-mode nil
                             tab-width 4))))
 
-
+;;; delete trailing space in various languages
 (add-hook 'python-mode-hook
       (lambda()
         (add-hook 'local-write-file-hooks
