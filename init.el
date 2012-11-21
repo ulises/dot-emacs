@@ -34,7 +34,7 @@
   (package-refresh-contents))
 
 ;; ;; Add in your own as you wish:
-(defvar my-packages '(starter-kit 
+(defvar my-packages '(starter-kit
                       starter-kit-lisp
                       nrepl
                       scala-mode
@@ -45,7 +45,9 @@
                       markdown-mode
                       auto-complete
                       flymake
-                      flymake-cursor)
+                      flymake-cursor
+                      ac-nrepl
+                      starter-kit-javascript)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -55,80 +57,26 @@
 ;;; work with utf in slime
 (setq slime-net-coding-system 'utf-8-unix)
 
-;;add erlang to the mix
-(add-dotfile-path "plugin/erlang/")
-(add-to-list 'load-path "/Users/ulises/Development/github/distel/elisp")
+(set-default-font "-apple-Inconsolata-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
 
-;; (set-default-font "-apple-Inconsolata-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
-(set-default-font "-apple-Inconsolata-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1")
 (color-theme-solarized-dark)
 (color-theme-monokai)
 
-;; add ensime to the mix
-;; load the ensime lisp code...
-;; (add-to-list 'load-path "/Users/ulises/.emacs.d/plugin/ensime-2.9.2/elisp/")
-;; (require 'ensime)
-
-;; This step causes the ensime-mode to be started whenever
-;; scala-mode is started for a buffer. You may have to customize this step
-;; if you're not using the standard scala mode.
-;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-
-;; Some Erlang customizations
-;; (add-to-list 'exec-path "/usr/local/lib/erlang/bin/")
-
-;; (setq erlang-root-dir "/usr/local/Cellar/erlang/R15B02/")
-;; (setq exec-path (cons "/usr/local/Cellar/erlang/R15B02/bin/" exec-path))
-;; (setq erlang-man-root-dir "/usr/local/Cellar/erlang/R15B02/share/man/")
-
-;; (my-add-path "/usr/local/Cellar/erlang/R15B02/bin/")
-;; (my-add-path "/usr/local/bin/")
-;; (my-add-path "/Users/ulises/bin/")
-;; (my-add-path "/usr/local/share/python/")
-;; (my-add-path "/usr/local/share/npm/bin/")
-
-;; (defun my-erlang-mode-hook ()
-;;   ;; when starting an Erlang shell in Emacs, default in the node name
-;;   (setq inferior-erlang-machine-options '("-sname" "emacs"))
-;;   ;; add Erlang functions to an imenu menu
-;;   (imenu-add-to-menubar "imenu")
-;;   ;; customize keys
-;;   (local-set-key [return] 'newline-and-indent))
-
-;; ;; A number of the erlang-extended-mode key bindings are useful in the shell too
-;; (defconst distel-shell-keys
-;;   '(("\C-\M-i"   erl-complete)
-;;     ("\M-?"      erl-complete)
-;;     ("\M-."      erl-find-source-under-point)
-;;     ("\M-,"      erl-find-source-unwind)
-;;     ("\M-*"      erl-find-source-unwind))
-;;   "Additional keys to bind when in Erlang shell.")
-
-;; (add-hook 'erlang-shell-mode-hook
-;;           (lambda ()
-;;             ;; add some Distel bindings to the Erlang shell
-;;             (dolist (spec distel-shell-keys)
-;;               (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
-;; (add-hook 'erlang-mode-hook 'my-erlang-mode-hook)
-
-;; ;; and distel for moar erlang goodness
-;; (add-to-list 'load-path "/User/ulises/Development/github/distel/elisp/")
-;; (require 'distel)
-;; (distel-setup)
-
-;; (add-hook 'erlang-mode-hook
-;;       (lambda()
-;;         (add-hook 'local-write-file-hooks
-;;               '(lambda()
-;;                  (save-excursion
-;;                    (delete-trailing-whitespace))))))
+;; custom paths added to the default PATH
+(my-add-path "/usr/local/bin/")
+(my-add-path "/Users/ulises/bin/")
 
 ;; ;; custom modes for some file extensions
 
-;; (add-to-list 'auto-mode-alist '("\\.erl$" . erlang-mode))
-;; (add-to-list 'auto-mode-alist '("\\.hrl?$" . erlang-mode))
+(add-to-list 'auto-mode-alist '("\\.erl$" . erlang-mode))
+(add-to-list 'auto-mode-alist '("\\.hrl?$" . erlang-mode))
 
-;; (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+
+;; distel for more erlang goodness
+(add-to-list 'load-path "/Users/ulises/development/distel/elisp")
+(require 'distel)
+(distel-setup)
 
 ;; ac-complete customisations
 (setq ac-auto-start 4)
@@ -138,28 +86,6 @@
 (ac-config-default)
 
 (add-to-list 'ac-modes 'erlang-mode)
-
-;; python things
-;; (setq py-load-pymacs-p nil)
-;; (setq python-python-command "/usr/local/bin/python")
-
-;; (add-to-list 'load-path "/Users/ulises/Development/github/python.el/")
-(require 'python)
-
-;; Set the execution path correctly when we launch from quicksilver,
-;; etc.
-;; (setq exec-path (split-string (getenv "PATH") ":"))
-
-;; (add-to-list 'load-path "/Users/ulises/.emacs.d/plugin/pymacs-0.25/")
-;; (require 'pymacs)
-;; (pymacs-load "ropemacs" "rope-")
-
-;; (autoload 'pymacs-apply "pymacs")
-;; (autoload 'pymacs-call "pymacs")
-;; (autoload 'pymacs-eval "pymacs" nil t)
-;; (autoload 'pymacs-exec "pymacs" nil t)
-;; (autoload 'pymacs-load "pymacs" nil t)
-;; (autoload 'pymacs-autoload "pymacs")
 
 ;; set the indentation to spaces *AFTER* loading python things :/
 (setq-default indent-tabs-mode nil)
@@ -174,7 +100,11 @@
 (add-hook 'javascript-mode-hook
           (function (lambda ()
                       (setq indent-tabs-mode nil
-                            tab-width 4))))
+                            tab-width 2))))
+(add-hook 'js-mode-hook
+          (function (lambda ()
+                      (setq indent-tabs-mode nil
+                            tab-width 2))))
 
 (add-hook 'erlang-mode-hook
           (function (lambda ()
@@ -196,6 +126,13 @@
                  (save-excursion
                    (delete-trailing-whitespace))))))
 
+(add-hook 'js-mode-hook
+      (lambda()
+        (add-hook 'local-write-file-hooks
+              '(lambda()
+                 (save-excursion
+                   (delete-trailing-whitespace))))))
+
 (add-hook 'erlang-mode-hook
       (lambda()
         (add-hook 'local-write-file-hooks
@@ -203,42 +140,6 @@
                  (save-excursion
                    (delete-trailing-whitespace))))))
 
-
-;; manually check with pyflakes and pep8
-(setq-default py-pychecker-command "check-py.sh")
-(setq-default python-check-command "check-py.sh")
-(setq-default py-pychecker-command-args "")
-
-;; automatically check with flymake
-
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-(when (load "flymake" t)
-  (defun flymake-pyflakes-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-               'flymake-create-temp-inplace))
-       (local-file (file-relative-name
-            temp-file
-            (file-name-directory buffer-file-name))))
-      (list "/Users/ulises/bin/check-py.sh"  (list local-file))))
-   (add-to-list 'flymake-allowed-file-name-masks
-             '("\\.py\\'" flymake-pyflakes-init)))
-(load-library "flymake-cursor")
-(global-set-key [f10] 'flymake-goto-prev-error)
-(global-set-key [f11] 'flymake-goto-next-error)
-
-(defun flymake-erlang-init ()
-  (let* ((temp-file (flymake-init-create-temp-buffer-copy
-		     'flymake-create-temp-inplace))
-	 (local-file (file-relative-name temp-file
-		(file-name-directory buffer-file-name))))
-    (list "/Users/ulises/bin/check-erl.sh" (list local-file))))
-
-(add-to-list 'flymake-allowed-file-name-masks '("\\.erl\\'" flymake-erlang-init))
-
-(add-hook 'scala-mode-hook
-          (lambda ()
-            (flymake-mode-on)
-            (scala-electric-mode)))
 (add-hook 'scala-mode-hook
           (lambda()
             (add-hook 'local-write-file-hooks
@@ -246,19 +147,53 @@
                          (save-excursion
                            (delete-trailing-whitespace))))))
 
-(defun flymake-scala-init ()
-  (let* ((text-of-first-line (buffer-substring-no-properties (point-min) (min 20 (point-max)))))
-    (progn
-      (remove-hook 'after-save-hook 'flymake-after-save-hook t)
-      (save-buffer)
-      (add-hook 'after-save-hook 'flymake-after-save-hook nil t)
-      (if (string-match "^//script" text-of-first-line)
-          (list "fsc" (list "-Xscript" "MainScript" "-d" "/tmp/" buffer-file-name))
-        (list "fsc" (list "-d" "/tmp/" buffer-file-name))))))
+;; automatically check with flymake
 
-(push '(".+\\.scala$" flymake-scala-init) flymake-allowed-file-name-masks)
-(push '("^\\(.*\\):\\([0-9]+\\): error: \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns)
+(add-hook 'find-file-hook 'flymake-find-file-hook)
+(load-library "flymake-cursor")
 
+(when (load "flymake" t)
+  (defun flymake-erlang-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name temp-file
+                                           (file-name-directory buffer-file-name))))
+      (list "/Users/ulises/bin/check-erl.sh" (list local-file))))
+
+  (add-to-list 'flymake-allowed-file-name-masks '("\\.erl\\'" flymake-erlang-init))
+
+  (defun flymake-jslint-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "/usr/local/bin/jshint" (list local-file))))
+
+  (add-to-list 'flymake-allowed-file-name-masks '("\\.js\\'" flymake-jslint-init))
+
+  (defun flymake-pyflakes-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "/Users/ulises/bin/check-py.sh"  (list local-file))))
+
+  (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-pyflakes-init))
+
+  (defun flymake-scala-init ()
+    (let* ((text-of-first-line (buffer-substring-no-properties (point-min) (min 20 (point-max)))))
+      (progn
+        (remove-hook 'after-save-hook 'flymake-after-save-hook t)
+        (save-buffer)
+        (add-hook 'after-save-hook 'flymake-after-save-hook nil t)
+        (if (string-match "^//script" text-of-first-line)
+            (list "/usr/local/bin/fsc" (list "-Xscript" "MainScript" "-d" "/tmp/" buffer-file-name))
+          (list "/usr/local/bin/fsc" (list "-d" "/tmp/" buffer-file-name))))))
+
+  (push '(".+\\.scala$" flymake-scala-init) flymake-allowed-file-name-masks)
+  (push '("^\\(.*\\):\\([0-9]+\\): error: \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -282,3 +217,17 @@
 
 ;; start the emacs server
 (server-start)
+
+;; autocomplete in nREPL
+(require 'ac-nrepl)
+(add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
+(add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'nrepl-mode))
+
+(defun set-auto-complete-as-completion-at-point-function ()
+  (setq completion-at-point-functions '(auto-complete)))
+(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
+
+(add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
+(add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
