@@ -66,6 +66,13 @@
 (my-add-path "/usr/local/bin/")
 (my-add-path "/Users/ulises/bin/")
 
+(let ((path (shell-command-to-string ". ~/.zshrc; echo -n $PATH")))
+  (setenv "PATH" path)
+  (setq exec-path 
+        (append
+         (split-string-and-unquote path ":")
+         exec-path)))
+
 ;; ;; custom modes for some file extensions
 
 (add-to-list 'auto-mode-alist '("\\.erl$" . erlang-mode))
@@ -77,6 +84,29 @@
 (add-to-list 'load-path "/Users/ulises/development/distel/elisp")
 (require 'distel)
 (distel-setup)
+
+;; Some Erlang customizations
+(add-hook 'erlang-mode-hook
+	  (lambda ()
+	    ;; when starting an Erlang shell in Emacs, default in the node name
+	    (setq inferior-erlang-machine-options '("-sname" "emacs"))
+	    ;; add Erlang functions to an imenu menu
+	    (imenu-add-to-menubar "imenu")))
+
+;; A number of the erlang-extended-mode key bindings are useful in the shell too
+(defconst distel-shell-keys
+  '(("\C-\M-i"   erl-complete)
+    ("\M-?"      erl-complete)
+    ("\M-."      erl-find-source-under-point)
+    ("\M-,"      erl-find-source-unwind)
+    ("\M-*"      erl-find-source-unwind))
+  "Additional keys to bind when in Erlang shell.")
+
+(add-hook 'erlang-shell-mode-hook
+	  (lambda ()
+	    ;; add some Distel bindings to the Erlang shell
+	    (dolist (spec distel-shell-keys)
+	      (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
 
 ;; ac-complete customisations
 (setq ac-auto-start 4)
