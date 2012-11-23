@@ -68,12 +68,12 @@
 
 (let ((path (shell-command-to-string ". ~/.zshrc; echo -n $PATH")))
   (setenv "PATH" path)
-  (setq exec-path 
+  (setq exec-path
         (append
          (split-string-and-unquote path ":")
          exec-path)))
 
-;; ;; custom modes for some file extensions
+;; custom modes for some file extensions
 
 (add-to-list 'auto-mode-alist '("\\.erl$" . erlang-mode))
 (add-to-list 'auto-mode-alist '("\\.hrl?$" . erlang-mode))
@@ -116,6 +116,12 @@
 (ac-config-default)
 
 (add-to-list 'ac-modes 'erlang-mode)
+
+(require 'ac-nrepl)
+(add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
+(add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'nrepl-mode))
 
 ;; set the indentation to spaces *AFTER* loading python things :/
 (setq-default indent-tabs-mode nil)
