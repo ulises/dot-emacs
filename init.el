@@ -47,7 +47,8 @@
                       flymake
                       flymake-cursor
                       ac-nrepl
-                      starter-kit-js)
+                      starter-kit-js
+                      multiple-cursors)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -271,3 +272,11 @@
 
 (add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
 (add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
+
+;; multiple-cursors(require 'multiple-cursors)
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
