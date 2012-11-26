@@ -60,7 +60,8 @@
 (setq mac-allow-anti-aliasing t)
 ;; (set-default-font "-apple-Inconsolata-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
 ;; (set-default-font "-apple-inconsolata-regular-r-normal--18-130-72-72-m-130-iso10646-1")
-(set-default-font "-apple-UbuntuMono-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+;; (set-default-font "-apple-Ubuntu_Mono-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
+(set-default-font "-apple-Menlo-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 
 (color-theme-solarized-dark)
 (color-theme-monokai)
