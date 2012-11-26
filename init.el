@@ -47,7 +47,7 @@
                       flymake
                       flymake-cursor
                       ac-nrepl
-                      starter-kit-javascript)
+                      starter-kit-js)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -57,7 +57,10 @@
 ;;; work with utf in slime
 (setq slime-net-coding-system 'utf-8-unix)
 
-(set-default-font "-apple-Inconsolata-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
+(setq mac-allow-anti-aliasing t)
+;; (set-default-font "-apple-Inconsolata-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
+;; (set-default-font "-apple-inconsolata-regular-r-normal--18-130-72-72-m-130-iso10646-1")
+(set-default-font "-apple-UbuntuMono-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 
 (color-theme-solarized-dark)
 (color-theme-monokai)
@@ -198,15 +201,15 @@
 
   (add-to-list 'flymake-allowed-file-name-masks '("\\.erl\\'" flymake-erlang-init))
 
-  (defun flymake-jslint-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "/usr/local/bin/jshint" (list local-file))))
+  ;; (defun flymake-jslint-init ()
+  ;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
+  ;;                      'flymake-create-temp-inplace))
+  ;;          (local-file (file-relative-name
+  ;;                       temp-file
+  ;;                       (file-name-directory buffer-file-name))))
+  ;;     (list "/usr/local/bin/jshint" (list local-file))))
 
-  (add-to-list 'flymake-allowed-file-name-masks '("\\.js\\'" flymake-jslint-init))
+  ;; (add-to-list 'flymake-allowed-file-name-masks '("\\.js\\'" flymake-jslint-init))
 
   (defun flymake-pyflakes-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
