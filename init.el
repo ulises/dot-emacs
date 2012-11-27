@@ -48,7 +48,9 @@
                       flymake-cursor
                       ac-nrepl
                       starter-kit-js
-                      multiple-cursors)
+                      multiple-cursors
+                      magithub
+                      magit-gh-pulls)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
