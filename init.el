@@ -65,7 +65,7 @@
 ;; (set-default-font "-apple-inconsolata-regular-r-normal--18-130-72-72-m-130-iso10646-1")
 ;; (set-default-font "-apple-Ubuntu_Mono-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
 (set-default-font "-apple-Menlo-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-
+(set-default-font "-apple-Source_Code_Pro_for_Powerline-medium-normal-normal-*-15-*-*-*-m-0-iso10646-1")
 (color-theme-solarized-dark)
 (color-theme-monokai)
 
