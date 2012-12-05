@@ -9,9 +9,6 @@
 (defun add-dotfile-path (p)
   (add-to-list 'load-path (concat dotfiles-dir p)))
 
-(defun add-lib-path (p)
-  (add-to-list 'load-path (concat dotfiles-lib-dir p)))
-
 (defun load-dotfile (f)
   (load-file (concat dotfiles-dir f)))
 
@@ -50,7 +47,8 @@
                       starter-kit-js
                       multiple-cursors
                       magithub
-                      magit-gh-pulls)
+                      magit-gh-pulls
+                      nrepl-ritz)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -64,7 +62,7 @@
 ;; (set-default-font "-apple-Inconsolata-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
 ;; (set-default-font "-apple-inconsolata-regular-r-normal--18-130-72-72-m-130-iso10646-1")
 ;; (set-default-font "-apple-Ubuntu_Mono-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
-(set-default-font "-apple-Menlo-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+;; (set-default-font "-apple-Menlo-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 (set-default-font "-apple-Source_Code_Pro_for_Powerline-medium-normal-normal-*-15-*-*-*-m-0-iso10646-1")
 (color-theme-solarized-dark)
 (color-theme-monokai)
@@ -282,3 +280,9 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+;; midje mode cannot be installed from marmalade
+;; see https://github.com/dnaumov/midje-mode/issues/14
+(add-dotfile-path "plugin/midje-mode/")
+(require 'midje-mode)
+(require 'clojure-jump-to-file)
