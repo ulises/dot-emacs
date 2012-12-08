@@ -85,8 +85,19 @@
 
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 
+
+;; edts
+;; (setq erlang-root-dir "/usr/local/Cellar/erlang/R15B03/")
+;; (add-to-list 'load-path "/Users/ulises/development/edts/")
+;; (require 'edts-start)
+
 ;; distel for more erlang goodness
 (add-to-list 'load-path "/Users/ulises/development/distel/elisp")
+
+(setq erlang-indent-level 4)
+(setq erlang-tab-always-indent t)
+(setq erlang-electric-commands t)
+
 (require 'distel)
 (distel-setup)
 
