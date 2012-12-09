@@ -92,7 +92,7 @@
 ;; (require 'edts-start)
 
 ;; distel for more erlang goodness
-(add-to-list 'load-path "/Users/ulises/development/distel/elisp")
+(add-to-list 'load-path "/Users/ulises/development/jixiuf-distel/elisp")
 
 (setq erlang-indent-level 4)
 (setq erlang-tab-always-indent t)
@@ -291,9 +291,3 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-;; midje mode cannot be installed from marmalade
-;; see https://github.com/dnaumov/midje-mode/issues/14
-;; (add-dotfile-path "plugin/midje-mode/")
-;; (require 'midje-mode)
-;; (require 'clojure-jump-to-file)
