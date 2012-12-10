@@ -48,7 +48,8 @@
                       multiple-cursors
                       magithub
                       magit-gh-pulls
-                      nrepl-ritz)
+                      nrepl-ritz
+                      midje-mode)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
