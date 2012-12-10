@@ -102,6 +102,10 @@
 (require 'distel)
 (distel-setup)
 
+;; eunit support
+(add-to-list 'load-path "/usr/local/Cellar/erlang/R15B03/lib/erlang/lib/tools-2.6.8/emacs/")
+(require 'erlang-eunit)
+
 ;; Some Erlang customizations
 (add-hook 'erlang-mode-hook
 	  (lambda ()
