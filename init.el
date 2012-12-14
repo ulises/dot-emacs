@@ -38,7 +38,7 @@
                       color-theme
                       color-theme-solarized
                       color-theme-monokai
-                      erlang
+;;                      erlang
                       markdown-mode
                       auto-complete
                       flymake
@@ -92,9 +92,27 @@
 ;; (add-to-list 'load-path "/Users/ulises/development/edts/")
 ;; (require 'edts-start)
 
-;; distel for more erlang goodness
-(add-to-list 'load-path "/Users/ulises/development/jixiuf-distel/elisp")
+;; erlang-mode
+(add-to-list 'load-path "/usr/local/Cellar/erlang/R15B03/lib/erlang/lib/tools-2.6.8/emacs/")
 
+(setq erlang-root-dir "/usr/local/Cellar/erlang/R15B03/")
+(setq exec-path (cons "/usr/local/Cellar/erlang/R15B03/bin" exec-path))
+(require 'erlang-start)
+(require 'erlang-flymake)
+
+(defun erlang-flymake-bigcouch-get-include-dirs ()
+  (list (concat (erlang-flymake-get-app-dir) "include")
+        "/Users/ulises/development/dbcore/deps"
+        "/Users/ulises/development/bitdiddle/emacs/dbcore/apps"))
+
+(setq erlang-flymake-get-include-dirs-function
+      'erlang-flymake-bigcouch-get-include-dirs)
+
+(erlang-flymake-only-on-save)
+
+;; distel for more erlang goodness
+;; (add-to-list 'load-path "/Users/ulises/development/jixiuf-distel/elisp")
+(add-to-list 'load-path "/Users/ulises/development/distel/elisp")
 (setq erlang-indent-level 4)
 (setq erlang-tab-always-indent t)
 (setq erlang-electric-commands t)
@@ -210,25 +228,6 @@
 (load-library "flymake-cursor")
 
 (when (load "flymake" t)
-  (defun flymake-erlang-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name temp-file
-                                           (file-name-directory buffer-file-name))))
-      (list "/Users/ulises/bin/check-erl.sh" (list local-file))))
-
-  (add-to-list 'flymake-allowed-file-name-masks '("\\.erl\\'" flymake-erlang-init))
-
-  ;; (defun flymake-jslint-init ()
-  ;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
-  ;;                      'flymake-create-temp-inplace))
-  ;;          (local-file (file-relative-name
-  ;;                       temp-file
-  ;;                       (file-name-directory buffer-file-name))))
-  ;;     (list "/usr/local/bin/jshint" (list local-file))))
-
-  ;; (add-to-list 'flymake-allowed-file-name-masks '("\\.js\\'" flymake-jslint-init))
-
   (defun flymake-pyflakes-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
                        'flymake-create-temp-inplace))
@@ -266,7 +265,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(safe-local-variable-values (quote ((erlang-indent-level . 4) (whitespace-line-column . 80) (lexical-binding . t)))))
 
 ;; generic stuff global to pretty much everything
 (menu-bar-mode)
