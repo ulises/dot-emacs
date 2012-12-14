@@ -66,7 +66,6 @@
 ;; (set-default-font "-apple-Menlo-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 (set-default-font "-apple-Source_Code_Pro_for_Powerline-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 (color-theme-solarized-dark)
-(color-theme-monokai)
 
 ;; custom paths added to the default PATH
 (my-add-path "/usr/local/bin/")
@@ -111,8 +110,8 @@
 (erlang-flymake-only-on-save)
 
 ;; distel for more erlang goodness
-;; (add-to-list 'load-path "/Users/ulises/development/jixiuf-distel/elisp")
-(add-to-list 'load-path "/Users/ulises/development/distel/elisp")
+(add-to-list 'load-path "/Users/ulises/development/jixiuf-distel/elisp")
+;; (add-to-list 'load-path "/Users/ulises/development/distel/elisp")
 (setq erlang-indent-level 4)
 (setq erlang-tab-always-indent t)
 (setq erlang-electric-commands t)
@@ -295,3 +294,16 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+;; Integrate terminal emacs with OSX pasteboard
+(defun copy-from-osx ()
+  (shell-command-to-string "pbpaste"))
+
+(defun paste-to-osx (text &optional push)
+  (let ((process-connection-type nil))
+      (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+        (process-send-string proc text)
+        (process-send-eof proc))))
+
+(setq interprogram-cut-function 'paste-to-osx)
+(setq interprogram-paste-function 'copy-from-osx)
