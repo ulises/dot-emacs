@@ -102,7 +102,7 @@
 (defun erlang-flymake-bigcouch-get-include-dirs ()
   (list (concat (erlang-flymake-get-app-dir) "include")
         "/Users/ulises/development/dbcore/deps"
-        "/Users/ulises/development/bitdiddle/emacs/dbcore/apps"))
+        "/Users/ulises/development/sneezy/deps"))
 
 (setq erlang-flymake-get-include-dirs-function
       'erlang-flymake-bigcouch-get-include-dirs)
