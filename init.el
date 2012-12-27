@@ -328,6 +328,9 @@
 (setq interprogram-paste-function 'copy-from-osx)
 
 ;; quickfix mode
-(add-to-list 'load-path "/Users/ulises/development/quickfix-mode")
-(require 'quickfix-mode)
-(load-file "~/development/quickfix-mode/quickfix-erlang.el")
+;; (add-to-list 'load-path "/Users/ulises/development/quickfix-mode")
+;; (require 'quickfix-mode)
+;; (load-file "~/development/quickfix-mode/quickfix-erlang.el")
+
+;; full-screen support \o/
+(global-set-key [s-return] 'ns-toggle-fullscreen)
