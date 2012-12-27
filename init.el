@@ -59,13 +59,17 @@
 ;;; work with utf in slime
 (setq slime-net-coding-system 'utf-8-unix)
 
-(setq mac-allow-anti-aliasing t)
+(setq mac-allow-anti-aliasing 't)
 ;; (set-default-font "-apple-Inconsolata-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
-;; (set-default-font "-apple-inconsolata-regular-r-normal--18-130-72-72-m-130-iso10646-1")
+(set-default-font "-apple-inconsolata-regular-r-normal--16-130-72-72-m-130-iso10646-1")
 ;; (set-default-font "-apple-Ubuntu_Mono-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
 ;; (set-default-font "-apple-Menlo-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-(set-default-font "-apple-Source_Code_Pro_for_Powerline-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-(color-theme-solarized-dark)
+;; (set-default-font "-apple-Source_Code_Pro_for_Powerline-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+;; (color-theme-solarized-dark)
+;; (color-theme-taylor)
+(and (boundp 'custom-safe-themes)
+     (load-theme 'deeper-blue t))
+;; (color-theme-deep-blue)
 
 ;; custom paths added to the default PATH
 (my-add-path "/usr/local/bin/")
@@ -86,11 +90,6 @@
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 
 
-;; edts
-;; (setq erlang-root-dir "/usr/local/Cellar/erlang/R15B03/")
-;; (add-to-list 'load-path "/Users/ulises/development/edts/")
-;; (require 'edts-start)
-
 ;; erlang-mode
 (add-to-list 'load-path "/usr/local/Cellar/erlang/R15B03/lib/erlang/lib/tools-2.6.8/emacs/")
 
@@ -109,7 +108,21 @@
 
 (erlang-flymake-only-on-save)
 
-;; distel for more erlang goodness
+;; edts
+;; (setq erlang-root-dir "/usr/local/Cellar/erlang/R15B03/")
+;; (add-to-list 'load-path "/Users/ulises/development/edts/")
+;; (require 'edts-start)
+
+;; (setq edts-projects
+;;       '(( ;; LYSE distributed reminder thing
+;;          (root       . "~/development/lyse-organiser"))
+;;         ( ;; My awesome project.
+;;          (name       . "sneezy")
+;;          (root       . "~/development/sneezy")
+;;          (node-sname . "sneezy")
+;;          (start-command . "make run")))
+
+;; ;; distel for more erlang goodness
 (add-to-list 'load-path "/Users/ulises/development/jixiuf-distel/elisp")
 ;; (add-to-list 'load-path "/Users/ulises/development/distel/elisp")
 (setq erlang-indent-level 4)
@@ -119,6 +132,12 @@
 (require 'distel)
 (distel-setup)
 
+;; (add-to-list 'load-path "/Users/ulises/development/wrangler/elisp")
+;; should add my own version of distel *after* wrangler's since
+;; add-to-list prepends entries
+;; (add-to-list 'load-path "/Users/ulises/development/jixiuf-distel/elisp")
+;; (require 'wrangler)
+
 ;; eunit support
 (add-to-list 'load-path "/usr/local/Cellar/erlang/R15B03/lib/erlang/lib/tools-2.6.8/emacs/")
 (require 'erlang-eunit)
@@ -127,7 +146,7 @@
 (add-hook 'erlang-mode-hook
 	  (lambda ()
 	    ;; when starting an Erlang shell in Emacs, default in the node name
-	    (setq inferior-erlang-machine-options '("-sname" "emacs"))
+	    (setq inferior-erlang-machine-options '("-name" "emacs"))
 	    ;; add Erlang functions to an imenu menu
 	    (imenu-add-to-menubar "imenu")))
 
@@ -264,7 +283,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(safe-local-variable-values (quote ((erlang-indent-level . 4) (whitespace-line-column . 80) (lexical-binding . t)))))
+ '(safe-local-variable-values (quote ((erlang-indent-level . 4) (whitespace-line-column . 80) (lexical-binding . t))))
+ '(wrangler-search-paths (quote ("/Users/ulises/development/"))))
 
 ;; generic stuff global to pretty much everything
 (menu-bar-mode)
@@ -293,7 +313,6 @@
 
 (global-set-key (kbd "C-c C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-previous-like-this)
-;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 ;; Integrate terminal emacs with OSX pasteboard
 (defun copy-from-osx ()
@@ -307,3 +326,8 @@
 
 (setq interprogram-cut-function 'paste-to-osx)
 (setq interprogram-paste-function 'copy-from-osx)
+
+;; quickfix mode
+(add-to-list 'load-path "/Users/ulises/development/quickfix-mode")
+(require 'quickfix-mode)
+(load-file "~/development/quickfix-mode/quickfix-erlang.el")
