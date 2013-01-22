@@ -49,7 +49,8 @@
                       magithub
                       magit-gh-pulls
                       nrepl-ritz
-                      midje-mode)
+                      midje-mode
+                      hideshowvis)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -61,10 +62,12 @@
 
 (setq mac-allow-anti-aliasing 't)
 ;; (set-default-font "-apple-Inconsolata-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
-(set-default-font "-apple-inconsolata-regular-r-normal--16-130-72-72-m-130-iso10646-1")
+;; (set-default-font "-apple-inconsolata-regular-r-normal--16-130-72-72-m-130-iso10646-1")
 ;; (set-default-font "-apple-Ubuntu_Mono-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
 ;; (set-default-font "-apple-Menlo-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-;; (set-default-font "-apple-Source_Code_Pro_for_Powerline-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+;; (set-default-font
+;; "-apple-Source_Code_Pro_for_Powerline-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+(set-default-font "-apple-PT_Mono-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 ;; (color-theme-solarized-dark)
 ;; (color-theme-taylor)
 (and (boundp 'custom-safe-themes)
@@ -123,8 +126,8 @@
 ;;          (start-command . "make run")))
 
 ;; ;; distel for more erlang goodness
-(add-to-list 'load-path "/Users/ulises/development/jixiuf-distel/elisp")
-;; (add-to-list 'load-path "/Users/ulises/development/distel/elisp")
+;; (add-to-list 'load-path "/Users/ulises/development/jixiuf-distel/elisp")
+(add-to-list 'load-path "/Users/ulises/development/distel/elisp")
 (setq erlang-indent-level 4)
 (setq erlang-tab-always-indent t)
 (setq erlang-electric-commands t)
@@ -179,6 +182,10 @@
 (add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'nrepl-mode))
+
+(add-to-list 'load-path "~/.emacs.d/plugin/")
+(require 'ac-python)
+(add-to-list 'ac-modes 'python-mode)
 
 ;; set the indentation to spaces *AFTER* loading python things :/
 (setq-default indent-tabs-mode nil)
@@ -239,6 +246,14 @@
                       '(lambda()
                          (save-excursion
                            (delete-trailing-whitespace))))))
+
+(add-hook 'clojure-mode-hook
+          (lambda()
+            (add-hook 'local-write-file-hooks
+                      '(lambda()
+                         (save-excursion
+                           (delete-trailing-whitespace))))))
+(add-hook 'clojure-mode-hook 'hideshowvis-enable)
 
 ;; automatically check with flymake
 
