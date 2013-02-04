@@ -65,14 +65,12 @@
 ;; (set-default-font "-apple-inconsolata-regular-r-normal--16-130-72-72-m-130-iso10646-1")
 ;; (set-default-font "-apple-Ubuntu_Mono-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
 ;; (set-default-font "-apple-Menlo-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-;; (set-default-font
-;; "-apple-Source_Code_Pro_for_Powerline-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-(set-default-font "-apple-PT_Mono-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+(set-default-font "-apple-Source_Code_Pro_for_Powerline-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+;; (set-default-font "-apple-PT_Mono-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 ;; (color-theme-solarized-dark)
 ;; (color-theme-taylor)
 (and (boundp 'custom-safe-themes)
      (load-theme 'deeper-blue t))
-;; (color-theme-deep-blue)
 
 ;; custom paths added to the default PATH
 (my-add-path "/usr/local/bin/")
@@ -361,3 +359,11 @@
 
 ;; Ignore compiled Haskell files in filename completions
 (add-to-list 'completion-ignored-extensions ".hi")
+
+(setq my-centred
+      [?\C-x ?1 ?\C-x ?3 ?\C-x ?3 ?\C-x ?o ?\C-x ?o ?\C-x ?3 ?\C-x ?0 ?\C-x ?o ?\C-x ?b ?e ?m ?p ?t ?y ?b ?u ?f ?f ?e ?r return return ?\C-x ?o ?\C-x ?b ?e ?m ?p ?t ?y return ?\C-x ?o])
+(put 'my-centred 'kmacro t)
+(defun centre-buffer ()
+  (interactive)
+  (execute-kbd-macro my-centred))
+(global-set-key (kbd "C-c c") 'centre-buffer)
