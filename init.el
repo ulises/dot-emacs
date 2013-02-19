@@ -25,6 +25,8 @@
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
+;; (add-to-list 'package-archives
+;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -50,7 +52,8 @@
                       magit-gh-pulls
                       nrepl-ritz
                       midje-mode
-                      hideshowvis)
+                      hideshowvis
+                      jedi)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -182,8 +185,8 @@
   '(add-to-list 'ac-modes 'nrepl-mode))
 
 (add-to-list 'load-path "~/.emacs.d/plugin/")
-(require 'ac-python)
-(add-to-list 'ac-modes 'python-mode)
+;; (require 'ac-python)
+;; (add-to-list 'ac-modes 'python-mode)
 
 ;; set the indentation to spaces *AFTER* loading python things :/
 (setq-default indent-tabs-mode nil)
@@ -367,3 +370,11 @@
   (interactive)
   (execute-kbd-macro my-centred))
 (global-set-key (kbd "C-c c") 'centre-buffer)
+
+(autoload 'jedi:setup "jedi" nil t)
+
+(setq jedi:setup-keys t)
+(add-hook 'python-mode-hook 'jedi:setup)
+
+(global-set-key (kbd "C-c f .") 'flymake-goto-next-error)
+(global-set-key (kbd "C-c f ,") 'flymake-goto-prev-error)
