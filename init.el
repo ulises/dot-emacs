@@ -389,8 +389,6 @@
                  "/usr/local/Cellar/mu/0.9.9/share/emacs/site-lisp/mu4e/")
     (require 'mu4e)
 
-    ;; defaults
-
     (setq mu4e-maildir "~/Maildir")
     (setq mu4e-drafts-folder "/Cloudant/[Gmail].Drafts")
     (setq mu4e-sent-folder   "/Cloudant/[Gmail].Sent Mail")
@@ -405,11 +403,11 @@
     ;; the 'All Mail' folder by pressing ``ma''.
 
     (setq mu4e-maildir-shortcuts
-          '( ("/gmail/INBOX"               . ?i)
-             ("/gmail/[Gmail].IMPORTANT"   . ?!)
-             ("/gmail/[Gmail].Sent Mail"   . ?s)
-             ("/gmail/[Gmail].Trash"       . ?t)
-             ("/gmail/[Gmail].All Mail"    . ?a)))
+          '( ("/Cloudant/INBOX"               . ?i)
+             ("/Cloudant/[Gmail].IMPORTANT"   . ?!)
+             ("/Cloudant/[Gmail].Sent Mail"   . ?s)
+             ("/Cloudant/[Gmail].Trash"       . ?t)
+             ("/Cloudant/[Gmail].All Mail"    . ?a)))
 
     ;; allow for updating mail using 'U' in the main view:
     ;; I have this running in the background anyway
@@ -427,12 +425,7 @@
 
     (require 'smtpmail)
 
-    ;; alternatively, for emacs-24 you can use:
-    (setq message-send-mail-function 'smtpmail-send-it
-          smtpmail-stream-type 'starttls
-          smtpmail-default-smtp-server "smtp.gmail.com"
-          smtpmail-smtp-server "smtp.gmail.com"
-          smtpmail-smtp-service 587)
+    (setq sendmail-program (executable-find "msmtp"))
 
     ;; don't keep message buffers around
     (setq message-kill-buffer-on-exit t)
@@ -463,8 +456,8 @@
                  '("View in browser" . mu4e-msgv-action-view-in-browser) t)
 
     ;; need this to convert some e-mails properly
-    (setq mu4e-html2text-command "html2text -utf8 -width 72"))
+    (setq mu4e-html2text-command "elinks -dump")
 
-  (mu4e))
+    (mu4e)))
 
 (put 'narrow-to-region 'disabled nil)
