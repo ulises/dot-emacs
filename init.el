@@ -456,8 +456,7 @@
                  '("View in browser" . mu4e-msgv-action-view-in-browser) t)
 
     ;; need this to convert some e-mails properly
-    (setq mu4e-html2text-command "elinks -dump")
-
-    (mu4e)))
+    (setq mu4e-html2text-command "elinks -dump"))
+  (mu4e))
 
 (put 'narrow-to-region 'disabled nil)
