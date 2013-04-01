@@ -70,6 +70,7 @@
 ;; (set-default-font "-apple-Ubuntu_Mono-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
 ;; (set-default-font "-apple-Menlo-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 (set-default-font "-apple-Source_Code_Pro_for_Powerline-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+(set-default-font "-apple-Source_Code_Pro-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 ;; (set-default-font "-apple-PT_Mono-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 ;; (color-theme-solarized-dark)
 ;; (color-theme-taylor)
@@ -301,6 +302,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(safe-local-variable-values (quote ((erlang-indent-level . 4) (whitespace-line-column . 80) (lexical-binding . t))))
+ '(send-mail-function (quote sendmail-send-it))
  '(wrangler-search-paths (quote ("/Users/ulises/development/"))))
 
 ;; generic stuff global to pretty much everything
@@ -429,6 +431,8 @@
     (setq mu4e-sent-folder   "/Cloudant/[Gmail].Sent Mail")
     (setq mu4e-trash-folder  "/Cloudant/[Gmail].Trash")
 
+    (setq mail-user-agent 'mu4e-user-agent)
+
     ;; don't save message to Sent Messages, Gmail/IMAP takes care of this
     (setq mu4e-sent-messages-behavior 'delete)
 
@@ -454,11 +458,7 @@
      user-full-name  "Ulises Cervino"
      message-signature nil)
 
-    ;; sending mail -- replace USERNAME with your gmail username
-    ;; also, make sure the gnutls command line utils are installed
-    ;; package 'gnutls-bin' in Debian/Ubuntu
-
-    (require 'smtpmail)
+    ;; (require 'smtpmail)
 
     (setq sendmail-program (executable-find "msmtp"))
 
