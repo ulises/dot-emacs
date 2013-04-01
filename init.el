@@ -400,8 +400,11 @@
        (not
         (with-current-buffer buffer
           (search-forward "FAILED" nil t))))
-      (progn
-        (message "TESTS PASSED.")
+      (with-current-buffer buffer
+        (beginning-of-buffer)
+        (let ((_ignored (re-search-forward "Ran [0-9]+ tests"))
+              (results (match-string-no-properties 0)))
+          (message "%s: ALL GOOD" results))
         (bury-buffer buffer)
         (switch-to-prev-buffer (get-buffer-window buffer) 'kill))))
 (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
