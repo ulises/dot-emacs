@@ -53,7 +53,8 @@
                       nrepl-ritz
                       midje-mode
                       hideshowvis
-                      jedi)
+                      jedi
+                      nose)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -375,6 +376,37 @@
 
 (setq jedi:setup-keys t)
 (add-hook 'python-mode-hook 'jedi:setup)
+(require 'nose)
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            (local-set-key "\C-ca" 'nosetests-all)
+            (local-set-key "\C-cm" 'nosetests-module)
+            (local-set-key "\C-c." 'nosetests-one)))
+
+(defun run-nosetests-if-python-file ()
+  (if (string-match ".py$" (buffer-name))
+      (nosetests-all)))
+
+(add-hook 'after-save-hook
+          (lambda ()
+            (run-nosetests-if-python-file)))
+
+(defun bury-compile-buffer-if-successful (buffer string)
+  "Bury a compilation buffer if succeeded without warnings."
+  (if (and
+       (string-match "nosetests" (buffer-name buffer))
+       (string-match "finished" string)
+       (not
+        (with-current-buffer buffer
+          (search-forward "FAILED" nil t))))
+      (progn
+        (message "TESTS PASSED.")
+        (bury-buffer buffer)
+        (switch-to-prev-buffer (get-buffer-window buffer) 'kill))))
+(add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
+
+(setq nose-use-verbose nil) ; default is t
 
 (global-set-key (kbd "C-c f .") 'flymake-goto-next-error)
 (global-set-key (kbd "C-c f ,") 'flymake-goto-prev-error)
