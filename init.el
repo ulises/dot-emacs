@@ -418,6 +418,8 @@
 
 ;;; mu4e stuff
 
+(add-hook 'message-mode-hook (lambda () (flyspell-mode 1)))
+
 (defun email ()
   (interactive)
 
