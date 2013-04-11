@@ -25,8 +25,8 @@
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
-;; (add-to-list 'package-archives
-;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -50,8 +50,8 @@
                       multiple-cursors
                       magithub
                       magit-gh-pulls
-                      nrepl-ritz
-                      midje-mode
+;;                      nrepl-ritz
+                      ;; midje-mode
                       hideshowvis
                       jedi
                       nose)
@@ -75,7 +75,7 @@
 ;; (color-theme-solarized-dark)
 ;; (color-theme-taylor)
 (and (boundp 'custom-safe-themes)
-     (load-theme 'deeper-blue t))
+     (load-theme 'solarized-dark t))
 
 ;; custom paths added to the default PATH
 (my-add-path "/usr/local/bin/")
@@ -301,6 +301,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
  '(safe-local-variable-values (quote ((erlang-indent-level . 4) (whitespace-line-column . 80) (lexical-binding . t))))
  '(send-mail-function (quote sendmail-send-it))
  '(wrangler-search-paths (quote ("/Users/ulises/development/"))))
@@ -497,3 +498,23 @@
   (mu4e))
 
 (put 'narrow-to-region 'disabled nil)
+
+;; Teach compile the syntax of the kibit output
+(require 'compile)
+(add-to-list 'compilation-error-regexp-alist-alist
+         '(kibit "At \\([^:]+\\):\\([[:digit:]]+\\):" 1 2 nil 0))
+(add-to-list 'compilation-error-regexp-alist 'kibit)
+
+;; A convenient command to run "lein kibit" in the project to which
+;; the current emacs buffer belongs to.
+(defun kibit ()
+  "Run kibit on the current project.
+Display the results in a hyperlinked *compilation* buffer."
+  (interactive)
+  (compile "lein kibit"))
+
+(defun kibit-current-file ()
+  "Run kibit on the current file.
+Display the results in a hyperlinked *compilation* buffer."
+  (interactive)
+  (compile (concat "lein kibit " buffer-file-name)))
