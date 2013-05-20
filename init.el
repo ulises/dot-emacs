@@ -433,7 +433,7 @@
 
   (when (not (featurep 'mu4e))
     (add-to-list 'load-path
-                 "/usr/local/Cellar/mu/0.9.9/share/emacs/site-lisp/mu4e/")
+                 "/usr/local/Cellar/mu/0.9.9.5/share/emacs/site-lisp/mu4e/")
     (require 'mu4e)
 
     (setq mu4e-maildir "~/Maildir")
