@@ -50,12 +50,11 @@
                       multiple-cursors
                       magithub
                       magit-gh-pulls
-;;                      nrepl-ritz
-                      ;; midje-mode
                       hideshowvis
                       jedi
                       nose
-                      base16-theme)
+                      base16-theme
+                      wisp-mode)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
