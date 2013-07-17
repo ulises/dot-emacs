@@ -27,6 +27,7 @@
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -68,9 +69,9 @@
 ;; (set-default-font "-apple-Inconsolata-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
 ;; (set-default-font "-apple-inconsolata-regular-r-normal--16-130-72-72-m-130-iso10646-1")
 ;; (set-default-font "-apple-Ubuntu_Mono-medium-normal-normal-*-18-*-*-*-m-0-iso10646-1")
-;; (set-default-font "-apple-Menlo-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-(set-default-font "-apple-Source_Code_Pro_for_Powerline-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-(set-default-font "-apple-Source_Code_Pro-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+(set-default-font "-apple-Menlo-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+;; (set-default-font "-apple-Source_Code_Pro_for_Powerline-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+;; (set-default-font "-apple-Source_Code_Pro-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 ;; (set-default-font "-apple-PT_Mono-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 ;; (color-theme-solarized-dark)
 ;; (color-theme-taylor)
@@ -101,75 +102,58 @@
 
 (setq erlang-root-dir "/usr/local/Cellar/erlang/R15B03/")
 (setq exec-path (cons "/usr/local/Cellar/erlang/R15B03/bin" exec-path))
-(require 'erlang-start)
-(require 'erlang-flymake)
+;; (require 'erlang-start)
+;; (require 'erlang-flymake)
 
-(defun erlang-flymake-bigcouch-get-include-dirs ()
-  (list (concat (erlang-flymake-get-app-dir) "include")
-        "/Users/ulises/development/dbcore/deps"
-        "/Users/ulises/development/sneezy/deps"))
+;; (defun erlang-flymake-bigcouch-get-include-dirs ()
+;;   (list (concat (erlang-flymake-get-app-dir) "include")
+;;         "/Users/ulises/development/dbcore/deps"
+;;         "/Users/ulises/development/sneezy/deps"))
 
-(setq erlang-flymake-get-include-dirs-function
-      'erlang-flymake-bigcouch-get-include-dirs)
+;; (setq erlang-flymake-get-include-dirs-function
+;;       'erlang-flymake-bigcouch-get-include-dirs)
 
-(erlang-flymake-only-on-save)
+;; (erlang-flymake-only-on-save)
 
 ;; edts
-;; (setq erlang-root-dir "/usr/local/Cellar/erlang/R15B03/")
 ;; (add-to-list 'load-path "/Users/ulises/development/edts/")
 ;; (require 'edts-start)
 
-;; (setq edts-projects
-;;       '(( ;; LYSE distributed reminder thing
-;;          (root       . "~/development/lyse-organiser"))
-;;         ( ;; My awesome project.
-;;          (name       . "sneezy")
-;;          (root       . "~/development/sneezy")
-;;          (node-sname . "sneezy")
-;;          (start-command . "make run")))
-
 ;; ;; distel for more erlang goodness
-;; (add-to-list 'load-path "/Users/ulises/development/jixiuf-distel/elisp")
-(add-to-list 'load-path "/Users/ulises/development/distel/elisp")
-(setq erlang-indent-level 4)
-(setq erlang-tab-always-indent t)
-(setq erlang-electric-commands t)
-
+(add-to-list 'load-path "/Users/ulises/development/distel-daf/elisp")
+;; (setq erlang-indent-level 4)
+;; (setq erlang-tab-always-indent t)
+;; (setq erlang-electric-commands t)
+;;(require 'erlang-start)
 (require 'distel)
 (distel-setup)
 
-;; (add-to-list 'load-path "/Users/ulises/development/wrangler/elisp")
-;; should add my own version of distel *after* wrangler's since
-;; add-to-list prepends entries
-;; (add-to-list 'load-path "/Users/ulises/development/jixiuf-distel/elisp")
-;; (require 'wrangler)
-
 ;; eunit support
-(add-to-list 'load-path "/usr/local/Cellar/erlang/R15B03/lib/erlang/lib/tools-2.6.8/emacs/")
-(require 'erlang-eunit)
+;; (add-to-list 'load-path "/usr/local/Cellar/erlang/R15B03/lib/erlang/lib/tools-2.6.8/emacs/")
+;; (require 'erlang-eunit)
 
 ;; Some Erlang customizations
 (add-hook 'erlang-mode-hook
 	  (lambda ()
 	    ;; when starting an Erlang shell in Emacs, default in the node name
-	    (setq inferior-erlang-machine-options '("-name" "emacs"))
+	    ;; (setq inferior-erlang-machine-options '("-sname" "emacs"))
 	    ;; add Erlang functions to an imenu menu
 	    (imenu-add-to-menubar "imenu")))
 
 ;; A number of the erlang-extended-mode key bindings are useful in the shell too
-(defconst distel-shell-keys
-  '(("\C-\M-i"   erl-complete)
-    ("\M-?"      erl-complete)
-    ("\M-."      erl-find-source-under-point)
-    ("\M-,"      erl-find-source-unwind)
-    ("\M-*"      erl-find-source-unwind))
-  "Additional keys to bind when in Erlang shell.")
+;; (defconst distel-shell-keys
+;;   '(("\C-\M-i"   erl-complete)
+;;     ("\M-?"      erl-complete)
+;;     ("\M-."      erl-find-source-under-point)
+;;     ("\M-,"      erl-find-source-unwind)
+;;     ("\M-*"      erl-find-source-unwind))
+;;   "Additional keys to bind when in Erlang shell.")
 
-(add-hook 'erlang-shell-mode-hook
-	  (lambda ()
-	    ;; add some Distel bindings to the Erlang shell
-	    (dolist (spec distel-shell-keys)
-	      (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
+;; (add-hook 'erlang-shell-mode-hook
+;; 	  (lambda ()
+;; 	    ;; add some Distel bindings to the Erlang shell
+;; 	    (dolist (spec distel-shell-keys)
+;; 	      (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
 
 ;; ac-complete customisations
 (setq ac-auto-start 4)
@@ -187,8 +171,6 @@
   '(add-to-list 'ac-modes 'nrepl-mode))
 
 (add-to-list 'load-path "~/.emacs.d/plugin/")
-;; (require 'ac-python)
-;; (add-to-list 'ac-modes 'python-mode)
 
 ;; set the indentation to spaces *AFTER* loading python things :/
 (setq-default indent-tabs-mode nil)
@@ -256,7 +238,6 @@
                       '(lambda()
                          (save-excursion
                            (delete-trailing-whitespace))))))
-(add-hook 'clojure-mode-hook 'hideshowvis-enable)
 
 ;; automatically check with flymake
 
@@ -303,6 +284,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes nil)
  '(custom-safe-themes (quote ("e53cc4144192bb4e4ed10a3fa3e7442cae4c3d231df8822f6c02f1220a0d259a" "de2c46ed1752b0d0423cde9b6401062b67a6a1300c068d5d7f67725adc6c3afb" "f41fd682a3cd1e16796068a2ca96e82cfd274e58b978156da0acce4d56f2b0d5" "978ff9496928cc94639cb1084004bf64235c5c7fb0cfbcc38a3871eb95fa88f6" "41b6698b5f9ab241ad6c30aea8c9f53d539e23ad4e3963abff4b57c0f8bf6730" "405fda54905200f202dd2e6ccbf94c1b7cc1312671894bc8eca7e6ec9e8a41a2" "ae8d0f1f36460f3705b583970188e4fbb145805b7accce0adb41031d99bd2580" "51bea7765ddaee2aac2983fac8099ec7d62dff47b708aa3595ad29899e9e9e44" "1affe85e8ae2667fb571fc8331e1e12840746dae5c46112d5abb0c3a973f5f5a" "9bac44c2b4dfbb723906b8c491ec06801feb57aa60448d047dbfdbd1a8650897" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
+ '(edts-man-root "~/.emacs.d/edts/doc/R15B01")
  '(safe-local-variable-values (quote ((erlang-indent-level . 4) (whitespace-line-column . 80) (lexical-binding . t))))
  '(send-mail-function (quote sendmail-send-it))
  '(wrangler-search-paths (quote ("/Users/ulises/development/"))))
@@ -315,7 +297,6 @@
 (server-start)
 
 ;; autocomplete in nREPL
-(require 'ac-nrepl)
 (add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
 (add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
 (eval-after-load "auto-complete"
@@ -347,34 +328,6 @@
 
 (setq interprogram-cut-function 'paste-to-osx)
 (setq interprogram-paste-function 'copy-from-osx)
-
-;; quickfix mode
-(add-to-list 'load-path "/Users/ulises/development/quickfix-mode")
-(require 'quickfix-mode)
-(load-file "~/development/quickfix-mode/quickfix-erlang.el")
-
-;; full-screen support \o/
-(global-set-key [s-return] 'ns-toggle-fullscreen)
-
-;; Haskell things
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-
-;; hslint on the command line only likes this indentation mode;
-;; alternatives commented out below.
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
-
-;; Ignore compiled Haskell files in filename completions
-(add-to-list 'completion-ignored-extensions ".hi")
-
-(setq my-centred
-      [?\C-x ?1 ?\C-x ?3 ?\C-x ?3 ?\C-x ?o ?\C-x ?o ?\C-x ?3 ?\C-x ?0 ?\C-x ?o ?\C-x ?b ?e ?m ?p ?t ?y ?b ?u ?f ?f ?e ?r return return ?\C-x ?o ?\C-x ?b ?e ?m ?p ?t ?y return ?\C-x ?o])
-(put 'my-centred 'kmacro t)
-(defun centre-buffer ()
-  (interactive)
-  (execute-kbd-macro my-centred))
-(global-set-key (kbd "C-c c") 'centre-buffer)
 
 (autoload 'jedi:setup "jedi" nil t)
 
@@ -417,86 +370,6 @@
 
 (global-set-key (kbd "C-c f .") 'flymake-goto-next-error)
 (global-set-key (kbd "C-c f ,") 'flymake-goto-prev-error)
-
-;;; mu4e stuff
-
-(add-hook 'message-mode-hook (lambda () (flyspell-mode 1)))
-
-(defun email ()
-  (interactive)
-
-  (when (not (featurep 'mu4e))
-    (add-to-list 'load-path
-                 "/usr/local/Cellar/mu/0.9.9.5/share/emacs/site-lisp/mu4e/")
-    (require 'mu4e)
-
-    (setq mu4e-maildir "~/Maildir")
-    (setq mu4e-drafts-folder "/Cloudant/[Gmail].Drafts")
-    (setq mu4e-sent-folder   "/Cloudant/[Gmail].Sent Mail")
-    (setq mu4e-trash-folder  "/Cloudant/[Gmail].Trash")
-
-    (setq mail-user-agent 'mu4e-user-agent)
-
-    ;; don't save message to Sent Messages, Gmail/IMAP takes care of this
-    (setq mu4e-sent-messages-behavior 'delete)
-
-    ;; setup some handy shortcuts
-    ;; you can quickly switch to your Inbox -- press ``ji''
-    ;; then, when you want archive some messages, move them to
-    ;; the 'All Mail' folder by pressing ``ma''.
-
-    (setq mu4e-maildir-shortcuts
-          '( ("/Cloudant/INBOX"               . ?i)
-             ("/Cloudant/[Gmail].IMPORTANT"   . ?!)
-             ("/Cloudant/[Gmail].Sent Mail"   . ?s)
-             ("/Cloudant/[Gmail].Trash"       . ?t)
-             ("/Cloudant/[Gmail].All Mail"    . ?a)))
-
-    ;; allow for updating mail using 'U' in the main view:
-    ;; I have this running in the background anyway
-    (setq mu4e-get-mail-command "offlineimap")
-
-    ;; something about ourselves
-    (setq
-     user-mail-address "ulises@cloudant.com"
-     user-full-name  "Ulises Cervino"
-     message-signature nil)
-
-    ;; (require 'smtpmail)
-
-    (setq sendmail-program (executable-find "msmtp"))
-
-    ;; don't keep message buffers around
-    (setq message-kill-buffer-on-exit t)
-
-    ;; show images
-    (setq mu4e-show-images t)
-
-    ;; use imagemagick, if available
-    (when (fboundp 'imagemagick-register-types)
-      (imagemagick-register-types))
-
-    ;;; message view action
-    (defun mu4e-msgv-action-view-in-browser (msg)
-      "View the body of the message in a web browser."
-      (interactive)
-      (let ((html (mu4e-msg-field (mu4e-message-at-point t) :body-html))
-            (tmpfile (format "%s/%d.html" temporary-file-directory (random))))
-        (unless html (error "No html part for this message"))
-        (with-temp-file tmpfile
-          (insert
-           "<html>"
-           "<head><meta http-equiv=\"content-type\""
-           "content=\"text/html;charset=UTF-8\">"
-           html))
-        (browse-url (concat "file://" tmpfile))))
-
-    (add-to-list 'mu4e-view-actions
-                 '("View in browser" . mu4e-msgv-action-view-in-browser) t)
-
-    ;; need this to convert some e-mails properly
-    (setq mu4e-html2text-command "elinks -dump"))
-  (mu4e))
 
 (put 'narrow-to-region 'disabled nil)
 
