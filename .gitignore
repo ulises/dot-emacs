@@ -12,3 +12,4 @@ tramp
 /swank/
 /var/pcache/gh/gh-gist-api/ulises
 /.mc-lists.el
+edts/*
