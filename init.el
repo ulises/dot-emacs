@@ -103,7 +103,7 @@
 
 (setq erlang-root-dir "/usr/local/Cellar/erlang/R15B03/")
 (setq exec-path (cons "/usr/local/Cellar/erlang/R15B03/bin" exec-path))
-;; (require 'erlang-start)
+(require 'erlang-start)
 ;; (require 'erlang-flymake)
 
 ;; (defun erlang-flymake-bigcouch-get-include-dirs ()
@@ -117,17 +117,17 @@
 ;; (erlang-flymake-only-on-save)
 
 ;; edts
-;; (add-to-list 'load-path "/Users/ulises/development/edts/")
-;; (require 'edts-start)
+(add-to-list 'load-path "/Users/ulises/development/edts/")
+(require 'edts-start)
 
 ;; ;; distel for more erlang goodness
-(add-to-list 'load-path "/Users/ulises/development/distel-daf/elisp")
-;; (setq erlang-indent-level 4)
-;; (setq erlang-tab-always-indent t)
-;; (setq erlang-electric-commands t)
-;;(require 'erlang-start)
-(require 'distel)
-(distel-setup)
+;; (add-to-list 'load-path "/Users/ulises/development/distel-dionne/elisp")
+;; ;; (setq erlang-indent-level 4)
+;; ;; (setq erlang-tab-always-indent t)
+;; ;; (setq erlang-electric-commands t)
+;; (require 'erlang-start)
+;; (require 'distel)
+;; (distel-setup)
 
 ;; eunit support
 ;; (add-to-list 'load-path "/usr/local/Cellar/erlang/R15B03/lib/erlang/lib/tools-2.6.8/emacs/")
