@@ -137,7 +137,9 @@
 (add-hook 'erlang-mode-hook
 	  (lambda ()
 	    ;; when starting an Erlang shell in Emacs, default in the node name
-	    ;; (setq inferior-erlang-machine-options '("-sname" "emacs"))
+	    (setq inferior-erlang-machine-options '("-sname" "emacs@hubert-cumberdale" "-remsh" "dev1@hubert-cumberdale"
+                                                "-setcookie" "monster" "-hidden"
+                                                "-boot" "/Users/ulises/development/dbcore/rel/dev1/releases/BUILD_NUMBER_GOES_HERE/start_clean"))
 	    ;; add Erlang functions to an imenu menu
 	    (imenu-add-to-menubar "imenu")))
 
