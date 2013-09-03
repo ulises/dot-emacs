@@ -118,17 +118,17 @@
 ;; (erlang-flymake-only-on-save)
 
 ;; edts
-(add-to-list 'load-path "/Users/ulises/development/edts/")
-(require 'edts-start)
+;; (add-to-list 'load-path "/Users/ulises/development/edts/")
+;; (require 'edts-start)
 
 ;; ;; distel for more erlang goodness
-;; (add-to-list 'load-path "/Users/ulises/development/distel-dionne/elisp")
+(add-to-list 'load-path "/Users/ulises/development/distel-orig/elisp")
 ;; ;; (setq erlang-indent-level 4)
 ;; ;; (setq erlang-tab-always-indent t)
 ;; ;; (setq erlang-electric-commands t)
 ;; (require 'erlang-start)
-;; (require 'distel)
-;; (distel-setup)
+(require 'distel)
+(distel-setup)
 
 ;; eunit support
 ;; (add-to-list 'load-path "/usr/local/Cellar/erlang/R15B03/lib/erlang/lib/tools-2.6.8/emacs/")
