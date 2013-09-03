@@ -37,11 +37,11 @@
 (defvar my-packages '(starter-kit
                       starter-kit-lisp
                       nrepl
-                      scala-mode
+                      ;;                      scala-mode
                       color-theme
                       color-theme-solarized
                       color-theme-monokai
-;;                      erlang
+                      ;;                      erlang
                       markdown-mode
                       auto-complete
                       flymake
