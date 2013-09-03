@@ -49,6 +49,7 @@
                       ac-nrepl
                       starter-kit-js
                       multiple-cursors
+                      magit
                       magithub
                       magit-gh-pulls
                       hideshowvis
