@@ -118,27 +118,39 @@
 ;; (erlang-flymake-only-on-save)
 
 ;; edts
-;; (add-to-list 'load-path "/Users/ulises/development/edts/")
-;; (require 'edts-start)
+(add-to-list 'load-path "/Users/ulises/development/edts/")
+(require 'edts-start)
 
 ;; ;; distel for more erlang goodness
-(add-to-list 'load-path "/Users/ulises/development/distel-orig/elisp")
-;; ;; (setq erlang-indent-level 4)
-;; ;; (setq erlang-tab-always-indent t)
-;; ;; (setq erlang-electric-commands t)
-;; (require 'erlang-start)
-(require 'distel)
-(distel-setup)
+;; (add-to-list 'load-path "/Users/ulises/development/distel-orig/elisp")
+;; ;; ;; (setq erlang-indent-level 4)
+;; ;; ;; (setq erlang-tab-always-indent t)
+;; ;; ;; (setq erlang-electric-commands t)
+;; ;; (require 'erlang-start)
+;; (require 'distel)
+;; (distel-setup)
 
 ;; eunit support
 ;; (add-to-list 'load-path "/usr/local/Cellar/erlang/R15B03/lib/erlang/lib/tools-2.6.8/emacs/")
 ;; (require 'erlang-eunit)
 
 ;; Some Erlang customizations
+
+(defun erlang-opts ()
+  (interactive)
+  (setq inferior-erlang-machine-options
+        (append '("-sname" "edts@hubert-cumberdale")
+                (if (y-or-n-p "Use dbcore settings?")
+                    '("-remsh" "dev1@hubert-cumberdale"
+                      "-setcookie" "monster" "-hidden"
+                      "-boot"
+                      "/Users/ulises/development/dbcore/rel/dev1/releases/BUILD_NUMBER_GOES_HERE/start_clean")))))
+
 (add-hook 'erlang-mode-hook
 	  (lambda ()
 	    ;; when starting an Erlang shell in Emacs, default in the node name
-	    (setq inferior-erlang-machine-options '("-sname" "emacs@hubert-cumberdale" "-remsh" "dev1@hubert-cumberdale"
+	    (setq inferior-erlang-machine-options '("-sname" "emacs@hubert-cumberdale"
+                                                "-remsh" "dev1@hubert-cumberdale"
                                                 "-setcookie" "monster" "-hidden"
                                                 "-boot" "/Users/ulises/development/dbcore/rel/dev1/releases/BUILD_NUMBER_GOES_HERE/start_clean"))
 	    ;; add Erlang functions to an imenu menu
