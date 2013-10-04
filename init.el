@@ -180,11 +180,21 @@
 
 (add-to-list 'ac-modes 'erlang-mode)
 
+;; autocomplete in nREPL
+
 (require 'ac-nrepl)
 (add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
 (add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'nrepl-mode))
+
+(defun set-auto-complete-as-completion-at-point-function ()
+  (setq completion-at-point-functions '(auto-complete)))
+(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
+
+(add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
+(add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
+
 
 (add-to-list 'load-path "~/.emacs.d/plugin/")
 
@@ -241,13 +251,6 @@
                  (save-excursion
                    (delete-trailing-whitespace))))))
 
-(add-hook 'scala-mode-hook
-          (lambda()
-            (add-hook 'local-write-file-hooks
-                      '(lambda()
-                         (save-excursion
-                           (delete-trailing-whitespace))))))
-
 (add-hook 'clojure-mode-hook
           (lambda()
             (add-hook 'local-write-file-hooks
@@ -255,44 +258,6 @@
                          (save-excursion
                            (delete-trailing-whitespace))))))
 
-;; automatically check with flymake
-
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-(load-library "flymake-cursor")
-
-(when (load "flymake" t)
-  (defun flymake-pyflakes-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "/Users/ulises/bin/check-py.sh"  (list local-file))))
-
-  (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-pyflakes-init))
-
-  (defun flymake-scala-init ()
-    (let* ((text-of-first-line (buffer-substring-no-properties (point-min) (min 20 (point-max)))))
-      (progn
-        (remove-hook 'after-save-hook 'flymake-after-save-hook t)
-        (save-buffer)
-        (add-hook 'after-save-hook 'flymake-after-save-hook nil t)
-        (if (string-match "^//script" text-of-first-line)
-            (list "/usr/local/bin/fsc" (list "-Xscript" "MainScript" "-d" "/tmp/" buffer-file-name))
-          (list "/usr/local/bin/fsc" (list "-d" "/tmp/" buffer-file-name))))))
-
-  (push '(".+\\.scala$" flymake-scala-init) flymake-allowed-file-name-masks)
-  (push '("^\\(.*\\):\\([0-9]+\\): error: \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(flymake-errline ((nil (:underline t :slant italic))))
- '(flymake-warnline ((nil (:underline t :slant italic)))))
-
-;; (setq flymake-no-changes-timeout 2)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -329,22 +294,6 @@
 (menu-bar-mode)
 (setq-default show-trailing-whitespace t)
 
-;; start the emacs server
-(server-start)
-
-;; autocomplete in nREPL
-(add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
-(add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'nrepl-mode))
-
-(defun set-auto-complete-as-completion-at-point-function ()
-  (setq completion-at-point-functions '(auto-complete)))
-(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
-
-(add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
-(add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
-
 ;; multiple-cursors
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -369,65 +318,46 @@
 
 (setq jedi:setup-keys t)
 (add-hook 'python-mode-hook 'jedi:setup)
-(require 'nose)
+;; (require 'nose)
 
-(add-hook 'python-mode-hook
-          (lambda ()
-            (local-set-key "\C-ca" 'nosetests-all)
-            (local-set-key "\C-cm" 'nosetests-module)
-            (local-set-key "\C-c." 'nosetests-one)))
+;; (add-hook 'python-mode-hook
+;;           (lambda ()
+;;             (local-set-key "\C-ca" 'nosetests-all)
+;;             (local-set-key "\C-cm" 'nosetests-module)
+;;             (local-set-key "\C-c." 'nosetests-one)))
 
-(defun run-nosetests-if-python-file ()
-  (if (string-match ".py$" (buffer-name))
-      (nosetests-all)))
+;; (defun run-nosetests-if-python-file ()
+;;   (if (string-match ".py$" (buffer-name))
+;;       (nosetests-all)))
 
-(add-hook 'after-save-hook
-          (lambda ()
-            (run-nosetests-if-python-file)))
+;; (add-hook 'after-save-hook
+;;           (lambda ()
+;;             (run-nosetests-if-python-file)))
 
-(defun bury-compile-buffer-if-successful (buffer string)
-  "Bury a compilation buffer if succeeded without warnings."
-  (if (and
-       (string-match "nosetests" (buffer-name buffer))
-       (string-match "finished" string)
-       (not
-        (with-current-buffer buffer
-          (search-forward "FAILED" nil t))))
-      (with-current-buffer buffer
-        (beginning-of-buffer)
-        (let ((_ignored (re-search-forward "Ran [0-9]+ tests"))
-              (results (match-string-no-properties 0)))
-          (message "%s: ALL GOOD" results))
-        (bury-buffer buffer)
-        (switch-to-prev-buffer (get-buffer-window buffer) 'kill))))
-(add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
+;; (defun bury-compile-buffer-if-successful (buffer string)
+;;   "Bury a compilation buffer if succeeded without warnings."
+;;   (if (and
+;;        (string-match "nosetests" (buffer-name buffer))
+;;        (string-match "finished" string)
+;;        (not
+;;         (with-current-buffer buffer
+;;           (search-forward "FAILED" nil t))))
+;;       (with-current-buffer buffer
+;;         (beginning-of-buffer)
+;;         (let ((_ignored (re-search-forward "Ran [0-9]+ tests"))
+;;               (results (match-string-no-properties 0)))
+;;           (message "%s: ALL GOOD" results))
+;;         (bury-buffer buffer)
+;;         (switch-to-prev-buffer (get-buffer-window buffer) 'kill))))
+;; (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
 
-(setq nose-use-verbose nil) ; default is t
+;; (setq nose-use-verbose nil)
+                                        ; default is t
 
 (global-set-key (kbd "C-c f .") 'flymake-goto-next-error)
 (global-set-key (kbd "C-c f ,") 'flymake-goto-prev-error)
 
 (put 'narrow-to-region 'disabled nil)
-
-;; Teach compile the syntax of the kibit output
-(require 'compile)
-(add-to-list 'compilation-error-regexp-alist-alist
-         '(kibit "At \\([^:]+\\):\\([[:digit:]]+\\):" 1 2 nil 0))
-(add-to-list 'compilation-error-regexp-alist 'kibit)
-
-;; A convenient command to run "lein kibit" in the project to which
-;; the current emacs buffer belongs to.
-(defun kibit ()
-  "Run kibit on the current project.
-Display the results in a hyperlinked *compilation* buffer."
-  (interactive)
-  (compile "lein kibit"))
-
-(defun kibit-current-file ()
-  "Run kibit on the current file.
-Display the results in a hyperlinked *compilation* buffer."
-  (interactive)
-  (compile (concat "lein kibit " buffer-file-name)))
 
 (defun helm-clojure-headlines ()
   "Display headlines for the current Clojure file."
@@ -437,3 +367,6 @@ Display the results in a hyperlinked *compilation* buffer."
                     (headline "^[;(]")))))
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; start the emacs server
+(server-start)
