@@ -44,19 +44,15 @@
                       color-theme-monokai
                       markdown-mode
                       auto-complete
-                      flymake
-                      flymake-cursor
                       ac-nrepl
                       starter-kit-js
                       multiple-cursors
                       magit
                       magithub
                       magit-gh-pulls
-                      hideshowvis
                       jedi
                       nose
-                      base16-theme
-                      wisp-mode)
+                      base16-theme)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
