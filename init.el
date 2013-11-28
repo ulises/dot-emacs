@@ -93,10 +93,10 @@
 
 
 ;; erlang-mode
-(add-to-list 'load-path "/usr/local/Cellar/erlang/R15B03/lib/erlang/lib/tools-2.6.8/emacs/")
+(add-to-list 'load-path "/opt/erlang/r16b/lib/tools-2.6.10/emacs")
 
-(setq erlang-root-dir "/usr/local/Cellar/erlang/R15B03/")
-(setq exec-path (cons "/usr/local/Cellar/erlang/R15B03/bin" exec-path))
+(setq erlang-root-dir "/opt/erlang/r16b/")
+(setq exec-path (cons "/opt/erlang/r16b/" exec-path))
 (require 'erlang-start)
 
 ;; edts
