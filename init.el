@@ -53,7 +53,8 @@
                       base16-theme
                       cider
                       rainbow-mode
-                      git-gutter+)
+                      git-gutter+
+                      git-gutter-fringe+)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -319,6 +320,7 @@
 
 ;; git-gutter
 (global-git-gutter+-mode t)
+(require 'git-gutter-fringe+)
 
 (eval-after-load 'git-gutter+
   '(progn
@@ -354,9 +356,6 @@
 ;; (set-face-foreground 'git-gutter:added "green")
 ;; (set-face-background 'git-gutter:deleted "grey10")
 ;; (set-face-foreground 'git-gutter:deleted "red")
-
-;; modifique aca
-;; y aca
 
 ;; start the emacs server
 (server-start)
