@@ -53,7 +53,7 @@
                       base16-theme
                       cider
                       rainbow-mode
-                      git-gutter)
+                      git-gutter+)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -318,18 +318,20 @@
 (add-hook 'clojure-mode-hook 'column-enforce-mode)
 
 ;; git-gutter
-(global-git-gutter-mode t)
+(global-git-gutter+-mode t)
 
-(global-set-key (kbd "C-x p") 'git-gutter:previous-hunk)
-(global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
+;; (global-set-key (kbd "C-x p") 'git-gutter:previous-hunk)
+;; (global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
 
-(setq git-gutter:modified-sign " ") ;; two space
-(setq git-gutter:added-sign " ")  ;; multiple character is OK
-(setq git-gutter:deleted-sign " ")
-(setq git-gutter:unchanged-sign " ")
+(setq git-gutter+-modified-sign " ") ;; two space
+(setq git-gutter+-added-sign " ")  ;; multiple character is OK
+(setq git-gutter+-deleted-sign " ")
+(setq git-gutter+-unchanged-sign " ")
+(setq git-gutter+-hide-gutter t)
 
-(set-face-background 'git-gutter:unchanged "grey10")
-;; (set-face-foreground 'git-gutter:unchanged "grey10")
+
+(set-face-background 'git-gutter+-unchanged "grey10")
+(set-face-foreground 'git-gutter+-unchanged "grey10")
 
 ;; (set-face-background 'git-gutter:modified "grey10")
 ;; (set-face-foreground 'git-gutter:modified "blue")
@@ -338,13 +340,8 @@
 ;; (set-face-background 'git-gutter:deleted "grey10")
 ;; (set-face-foreground 'git-gutter:deleted "red")
 
-;; para que veas como quedan las adiciones
-;; y el background
-
-;; (setq git-gutter:window-width 2)
-;; (setq git-gutter:modified-sign "☁")
-;; (setq git-gutter:added-sign "☀")
-;; (setq git-gutter:deleted-sign "☂")
+;; modifique aca
+;; y aca
 
 ;; start the emacs server
 (server-start)
