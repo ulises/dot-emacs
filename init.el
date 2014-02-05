@@ -329,6 +329,7 @@
 (setq git-gutter:unchanged-sign "  ")
 
 (set-face-background 'git-gutter:unchanged "grey10")
+(set-face-foreground 'git-gutter:unchanged "grey10")
 
 (set-face-background 'git-gutter:modified "grey10")
 (set-face-foreground 'git-gutter:modified "grey10")
