@@ -320,7 +320,7 @@
 
 ;; git-gutter
 (global-git-gutter+-mode t)
-(require 'git-gutter-fringe+)
+;; (require 'git-gutter-fringe+)
 
 (eval-after-load 'git-gutter+
   '(progn
