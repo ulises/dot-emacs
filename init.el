@@ -357,6 +357,10 @@
 ;; (set-face-background 'git-gutter:deleted "grey10")
 ;; (set-face-foreground 'git-gutter:deleted "red")
 
+;; auto-dim-other-buffers
+(add-hook 'after-init-hook (lambda ()
+  (when (fboundp 'auto-dim-other-buffers-mode)
+    (auto-dim-other-buffers-mode t))))
 ;; start the emacs server
 (server-start)
 
