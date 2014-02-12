@@ -88,8 +88,8 @@
 ;; erlang-mode
 (add-to-list 'load-path "/opt/erlang/r16b/lib/tools-2.6.10/emacs")
 
-(setq erlang-root-dir "/opt/erlang/r16b/")
-(setq exec-path (cons "/opt/erlang/r16b/" exec-path))
+(setq erlang-root-dir "/opt/erlang/r14b01")
+(setq exec-path (cons "/opt/erlang/r14b01" exec-path))
 (require 'erlang-start)
 
 ;; edts
@@ -114,12 +114,10 @@
 (defun erlang-opts ()
   (interactive)
   (setq inferior-erlang-machine-options
-        (append '("-sname" "edts@hubert-cumberdale")
+        (append '("-name" "ohai@127.0.0.1")
                 (if (y-or-n-p "Use dbcore settings?")
-                    '("-remsh" "dev1@hubert-cumberdale"
-                      "-setcookie" "monster" "-hidden"
-                      "-boot"
-                      "/Users/ulises/development/dbcore/rel/dev1/releases/BUILD_NUMBER_GOES_HERE/start_clean")))))
+                    '("-remsh" "dev1@127.0.0.1"
+                      "-setcookie" "monster" "-hidden")))))
 
 (add-hook 'erlang-mode-hook
 	  (lambda ()
