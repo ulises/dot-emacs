@@ -359,6 +359,13 @@
 (add-hook 'after-init-hook (lambda ()
   (when (fboundp 'auto-dim-other-buffers-mode)
     (auto-dim-other-buffers-mode t))))
+
+;; diary/todo things
+
+(global-set-key (kbd "C-c d d")
+                (lambda() (interactive)
+                  (find-file "~/org/todo.org")))
+
 ;; start the emacs server
 (server-start)
 
