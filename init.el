@@ -366,6 +366,9 @@
                 (lambda() (interactive)
                   (find-file "~/org/todo.org")))
 
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
+
 ;; start the emacs server
 (server-start)
 
