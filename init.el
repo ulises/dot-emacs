@@ -62,9 +62,12 @@
     (package-install p)))
 
 (setq mac-allow-anti-aliasing 't)
-(set-frame-font "-apple-Source_Code_Pro-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-(set-frame-font "-apple-Andale_Mono-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-(set-frame-font "-apple-Inconsolata-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+(set-frame-font "-apple-Anonymous_Pro-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+
+
+;; (set-frame-font "-apple-Source_Code_Pro-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+;; (set-frame-font "-apple-Andale_Mono-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+;; (set-frame-font "-apple-Inconsolata-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1")
 
 ;; custom paths added to the default PATH
 (my-add-path "/usr/local/bin/")
