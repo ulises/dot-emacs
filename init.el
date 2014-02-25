@@ -370,10 +370,20 @@
                 (lambda() (interactive)
                   (find-file "~/org/todo.org")))
 
+;; keep clock history across sessions
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
+
+;; let me know if I've been idling for more than 5 minutes
+(setq org-clock-idle-time 5)
 
 ;; start the emacs server
 (server-start)
 
 ;;; init.el ends here
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
