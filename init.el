@@ -91,8 +91,8 @@
 ;; erlang-mode
 (add-to-list 'load-path "/opt/erlang/r16b/lib/tools-2.6.10/emacs")
 
-(setq erlang-root-dir "/opt/erlang/r14b01")
-(setq exec-path (cons "/opt/erlang/r14b01" exec-path))
+(setq erlang-root-dir "/usr/local/Cellar/erlang/R16B03-1")
+(setq exec-path (cons "/usr/local/Cellar/erlang/R16B03-1/bin" exec-path))
 (require 'erlang-start)
 
 ;; edts
@@ -117,7 +117,7 @@
 (defun erlang-opts ()
   (interactive)
   (setq inferior-erlang-machine-options
-        (append '("-name" "ohai@127.0.0.1")
+        (append '("-sname" "emacs")
                 (if (y-or-n-p "Use dbcore settings?")
                     '("-remsh" "dev1@127.0.0.1"
                       "-setcookie" "monster" "-hidden")))))
@@ -125,10 +125,10 @@
 (add-hook 'erlang-mode-hook
 	  (lambda ()
 	    ;; when starting an Erlang shell in Emacs, default in the node name
-	    (setq inferior-erlang-machine-options '("-sname" "emacs@hubert-cumberdale"
-                                                "-remsh" "dev1@hubert-cumberdale"
-                                                "-setcookie" "monster" "-hidden"
-                                                "-boot" "/Users/ulises/development/dbcore/rel/dev1/releases/BUILD_NUMBER_GOES_HERE/start_clean"))
+	    ;; (setq inferior-erlang-machine-options '("-sname" "emacs@hubert-cumberdale"
+        ;;                                         "-remsh" "dev1@hubert-cumberdale"
+        ;;                                         "-setcookie" "monster" "-hidden"
+        ;;                                         "-boot" "/Users/ulises/development/dbcore/rel/dev1/releases/BUILD_NUMBER_GOES_HERE/start_clean"))
 	    ;; add Erlang functions to an imenu menu
 	    (imenu-add-to-menubar "imenu")))
 
