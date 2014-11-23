@@ -235,6 +235,8 @@
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 (global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "M-i") 'helm-swoop)
+(global-set-key (kbd "C-c M-i") 'helm-multi-swoop-all)
 
 (load-file "helm-itunes.el")
 
