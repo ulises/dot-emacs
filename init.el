@@ -238,8 +238,6 @@
 (global-set-key (kbd "M-i") 'helm-swoop)
 (global-set-key (kbd "C-c M-i") 'helm-multi-swoop-all)
 
-(load-file "helm-itunes.el")
-
 (load-theme 'leuven t)
 
 ;; start the emacs server
