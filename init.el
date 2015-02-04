@@ -75,36 +75,6 @@
          (split-string-and-unquote path ":")
          exec-path)))
 
-;;; Erlang things
-(add-to-list 'auto-mode-alist '("\\.erl$" . erlang-mode))
-(add-to-list 'auto-mode-alist '("\\.hrl?$" . erlang-mode))
-
-;; erlang-mode
-(add-to-list 'load-path "/usr/local/Cellar/erlang/R16B03-1/lib/erlang/lib/tools-2.6.13/emacs/")
-
-(setq erlang-root-dir "/usr/local/Cellar/erlang/R16B03-1")
-(setq exec-path (cons "/usr/local/Cellar/erlang/R16B03-1/bin" exec-path))
-(require 'erlang-start)
-
-;; ;; Some Erlang customizations
-;; (defun erlang-opts ()
-;;   (interactive)
-;;   (setq inferior-erlang-machine-options
-;;         (append '("-sname" "emacs")
-;;                 (if (y-or-n-p "Use dbcore settings?")
-;;                     '("-remsh" "dev1@127.0.0.1"
-;;                       "-setcookie" "monster" "-hidden")))))
-
-;; (add-hook 'erlang-mode-hook
-;; 	  (lambda ()
-;; 	    ;; when starting an Erlang shell in Emacs, default in the node name
-;; 	    ;; (setq inferior-erlang-machine-options '("-sname" "emacs@hubert-cumberdale"
-;;         ;;                                         "-remsh" "dev1@hubert-cumberdale"
-;;         ;;                                         "-setcookie" "monster" "-hidden"
-;;         ;;                                         "-boot" "/Users/ulises/development/dbcore/rel/dev1/releases/BUILD_NUMBER_GOES_HERE/start_clean"))
-;; 	    ;; add Erlang functions to an imenu menu
-;; 	    (imenu-add-to-menubar "imenu")))
-
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 
 ;;; ac-complete customisations
@@ -114,21 +84,17 @@
 (require 'auto-complete-config)
 (ac-config-default)
 
-(add-to-list 'ac-modes 'erlang-mode)
 (add-to-list 'ac-modes 'clojure-mode)
 
 ;;; set the indentation to spaces *AFTER* loading python things :/
+
+
+
+
 (setq-default indent-tabs-mode nil)
 
 ;;; delete trailing space in various languages
 (add-hook 'python-mode-hook
-      (lambda()
-        (add-hook 'local-write-file-hooks
-              '(lambda()
-                 (save-excursion
-                   (delete-trailing-whitespace))))))
-
-(add-hook 'erlang-mode-hook
       (lambda()
         (add-hook 'local-write-file-hooks
               '(lambda()
