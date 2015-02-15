@@ -266,6 +266,8 @@
        (kbd "C-c C-o")
        'haskell-compile)))
 
+;; ibuffer bindings
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 
 ;; start the emacs server
