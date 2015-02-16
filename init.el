@@ -93,6 +93,9 @@
 
 (setq-default indent-tabs-mode nil)
 
+;;; delete trailing space everywhere!
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;;; delete trailing space in various languages
 (add-hook 'python-mode-hook
       (lambda()
