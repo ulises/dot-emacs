@@ -53,7 +53,8 @@
                       powerline
                       dakrone-theme
                       leuven-theme
-                      gist)
+                      gist
+                      eclim)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -272,6 +273,29 @@
 ;; ibuffer bindings
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;; eclim
+(require 'eclim)
+(global-eclim-mode)
+
+(require 'eclimd)
+
+;; custom eclim/eclipse paths
+(custom-set-variables
+  '(eclim-eclipse-dirs '("~/eclipse"))
+  '(eclim-executable "~/eclipse/eclim")
+  '(eclimd-default-workspace "~/workspace/"))
+
+;; displaying compilation error messages in the echo area
+(setq help-at-pt-display-when-idle t)
+(setq help-at-pt-timer-delay 0.1)
+(help-at-pt-set-timer)
+
+;; add the emacs-eclim source
+(require 'ac-emacs-eclim-source)
+(ac-emacs-eclim-config)
+
+;; bind hippie expand
+(global-set-key "\M- " 'hippie-expand)
 
 ;; start the emacs server
 (server-start)
